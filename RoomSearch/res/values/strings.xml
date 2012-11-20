@@ -1,0 +1,35 @@
+<resources>
+
+    <string name="app_name">RoomSearch</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_room_search">Room Search</string>
+    <string name="weiter">Weiter</string>
+    <string name="stundenplan">Stundenplan</string>
+    <string name="standort">Standort</string>
+    <string name="mon">Montag</string>
+    <string name="aktiv">nicht ausgewählt</string>
+    <string name="die">Dienstag</string>
+    <string name="mit">Mittwoch</string>
+    <string name="don">Donnerstag</string>
+    <string name="fre">Freitag</string>
+    <string name="finden">Raum finden</string>
+    <string name="etage">Auf welcher Etage befindest du dich?</string>
+    <string name="test">Hier kommt der ermittelte Standort rein</string>
+    <string name="vorlesung">Raum und Vorlesung</string>
+    <string name="ziel">Zielraum</string>
+    <string name="eingabe_button">Senden</string>
+    <string name="gast">Gast</string>
+    <string name="einleitung_login">Willkommen bei Room Search</string>
+    <string name="info_login">Sind sie Mitglied an der Beuth Hochschule, dann geben sie ihre HRZ Nummer ein und drücken sie Senden. Sind sie Gast drücken sie auf Gast.</string>
+    <string name="hrz_text">HRZ-Kennung</string>
+    <string name="passwort">Passwort</string>
+    <string name="lädt">lädt...</string>
+    <string name="nichtvorhanden">Noch nicht vorhanden.</string>
+    <string name="w_haus">Zu welchem Haus willst du?</string>
+    <string name="raumnummer">Raumnummer</string>
+    <string name="suchen">Suchen</string>
+    <string name="raumnummerinfo">Bitte gebe nur die Raumnummer ohne den Buchstaben an. Wenn du auf Senden drückst wird dein gesuchter Raum angezeigt in dem gewünschten Gebäude.</string>
+    <string name="en_welcomeRS">Welcome by Room Search</string>
+
+</resources>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/welcome_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dip"
+        android:text="@string/einleitung_login"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="25dip" />
+
+    <TextView
+        android:id="@+id/info_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="5dip"
+        android:layout_marginTop="5dip"
+        android:text="@string/info_login"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="15dip" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/hrz_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="15dip"
+                android:text="@string/hrz_text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="20dip" />
+
+            <EditText
+                android:id="@+id/matText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:ems="10"
+                android:inputType="text"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_marginLeft="20dip"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/pw_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="15dip"
+                android:text="@string/passwort"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="20dip" />
+
+            <EditText
+                android:id="@+id/pwText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:ems="10"
+                android:inputType="textPassword" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="30dip"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/eingabe_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/eingabe_button" />
+
+        <Button
+            android:id="@+id/gast_button"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gast" />
+    </LinearLayout>
+
+</LinearLayout>
