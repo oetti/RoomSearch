@@ -1,20 +1,31 @@
 package com.example.roomsearch;
 
 import java.io.IOException;
+
+import location.WifiReceiver;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnClickListener {
 	private String vorlesung;
@@ -27,7 +38,19 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 	private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	// dummy Raumposition
 	private double[] raumPos = {6, 123};
+	// WifiManager
+	private WifiManager wifi;
+	boolean wifiWasEnabled;
+	@SuppressWarnings("unused")
+	private int networkID = -1;
+	WifiReceiver wr;
+	public ImageView pfeil;
+	// Kompass
+	private static SensorManager sensorService;
+	private Sensor sensor;
 	
+	
+	@SuppressWarnings("deprecation")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +58,32 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
         this.vorlesung = intent.getExtras().getString("Vorlesung");
         String raumnum = intent.getExtras().getString("Nummer");
         setContentView(R.layout.cam_nav_sicht);
+        
+        // Wlan Location
+        wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        wifiWasEnabled = wifi.isWifiEnabled();
+        wr = new WifiReceiver(this);
+        IntentFilter i = new IntentFilter();
+        i.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+        registerReceiver(wr,i);
+        networkID = wifi.getConnectionInfo().getNetworkId();
+        wifi.startScan();
+        
+        // Kompass location
+        sensorService = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensor = sensorService.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+        if (sensor != null) {
+          sensorService.registerListener(mySensorEventListener, sensor,
+              SensorManager.SENSOR_DELAY_NORMAL);
+          Log.i("Compass MainActivity", "Registerered for ORIENTATION Sensor");
+
+        } else {
+          Log.e("Compass MainActivity", "Registerered for ORIENTATION Sensor");
+          Toast.makeText(this, "ORIENTATION Sensor not found",
+              Toast.LENGTH_LONG).show();
+          finish();
+        }
+        
         String nummer = "";
         
         TextView raum = (TextView) findViewById(R.id.textView_raum);
@@ -72,16 +121,31 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
         holder.addCallback(this);
         
         // Paint Linie
+        
+        // Pfeil
+        pfeil = (ImageView) findViewById(R.id.pfeil_richtung);
        
 	}
-
-	/*
-	 * welche Location und Darstellung ausgewählt werden sollen
-	 */
-	public int getLocationOptions() {
-		return 1;
-	}
 	
+	private SensorEventListener mySensorEventListener = new SensorEventListener() {
+
+	    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	    }
+
+	    public void onSensorChanged(SensorEvent event) {
+	      float azimuth = event.values[0];
+	      wr.updateData(azimuth);
+	    }
+	  };
+	  
+	  @Override
+	  protected void onDestroy() {
+	    super.onDestroy();
+	    if (sensor != null) {
+	      sensorService.unregisterListener(mySensorEventListener);
+	    }
+	  }
+
 	/*
 	 * gibt die Raumposition wieder
 	 */
@@ -115,9 +179,12 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 		}
 	}
 
+	public WifiManager getWifi() {
+	      return wifi;
+	}
+	
 	public void surfaceCreated(SurfaceHolder holder) {
-		cam = android.hardware.Camera.open();
-		 
+		cam = android.hardware.Camera.open();	 
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
@@ -143,7 +210,5 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 			// TODO Automatisch generierter Methodenstub
 			
 		}
-		
 	}
-	
 }

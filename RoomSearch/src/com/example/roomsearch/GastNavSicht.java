@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class GastNavSicht extends Activity implements OnClickListener {
+	@SuppressWarnings("unused")
 	private Button beuth, stras, gauss, bauwesen;
 	
 	@Override

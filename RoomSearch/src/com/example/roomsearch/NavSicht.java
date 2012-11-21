@@ -1,7 +1,5 @@
 package com.example.roomsearch;
 
-import java.util.ArrayList;
-
 import location.WifiReceiver;
 import Datenbank.Datenbank;
 import Datenbank.Listfiller;
@@ -24,12 +22,13 @@ import android.widget.Toast;
 
 public class NavSicht extends Activity implements OnClickListener, OnCheckedChangeListener{
 	private Listfiller filler = new Listfiller();
-	private Spinner spinMon, spinDie, spinMit, spinDon, spinFre, spinEtage;
+	private Spinner spinMon, spinDie, spinMit, spinDon, spinFre;
 	private CheckBox chMo, chDi, chMi, chDo, chFr;
 	public TextView standort;
 	private Datenbank dt;
 	private WifiManager wifi;
 	boolean wifiWasEnabled;
+	@SuppressWarnings("unused")
 	private int networkID = -1;
 	WifiReceiver wr;
 
@@ -93,15 +92,8 @@ public class NavSicht extends Activity implements OnClickListener, OnCheckedChan
 		chFr.setOnCheckedChangeListener(this);
 	}
 	
-	 public WifiManager getWifi() {
+	public WifiManager getWifi() {
 	      return wifi;
-	    }
-	
-	/*
-	 * welche Location und Darstellung ausgewählt werden sollen
-	 */
-	public int getLocationOptions() {
-		return 0;
 	}
 
 	public void onClick(View v) {
