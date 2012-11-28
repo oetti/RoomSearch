@@ -13,11 +13,24 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * In dieser Ansicht kann jemand der ein Profil hat sich einloggen und damit
+ * auf seine Daten zugreifen.
+ * 
+ * Als Gast kann man einfach den Button drücken um weiter zukommen.
+ * 
+ * @author Andreas Oettinger
+ *
+ */
 public class LoginSicht extends Activity implements OnClickListener, OnMenuItemClickListener {
 	private Button senden;
 	private Button gast;
+	// Die Klasse überprüft den Accountnamen und das dazu gehörige Passwort
 	private SecurityService ss = new SecurityService();
 	
+	/**
+	 * Ansicht setzen
+	 */
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +45,11 @@ public class LoginSicht extends Activity implements OnClickListener, OnMenuItemC
         gast.setOnClickListener(this);
 	}
 
+	/**
+	 * Klick-Event
+	 */
 	public void onClick(View v) {
-		// Wird Sende-Button gedrückt dann mache das
+		// Wird Senden-Button gedrückt dann mache das
 		if(v == senden) {
 			// HRZ-Kennung und Passwort
 			TextView name = (TextView) findViewById(R.id.matText);
@@ -70,11 +86,14 @@ public class LoginSicht extends Activity implements OnClickListener, OnMenuItemC
 		}
 	}
 	
+	/**
+	 * Menu Optionen
+	 */
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_room_search, menu);
-        menu.add("Deutsch"); 
-        menu.add("Englisch");
+        menu.add("deutsch"); 
+        menu.add("english");
         MenuItem lang = menu.getItem(1);
         lang.setOnMenuItemClickListener(this);
         return true;
@@ -84,6 +103,9 @@ public class LoginSicht extends Activity implements OnClickListener, OnMenuItemC
 		return false;
 	}
 	
+	/**
+	 * Zurück Ansicht
+	 */
 	@Override
 	public void onBackPressed() {
 		// TODO Automatisch generierter Methodenstub

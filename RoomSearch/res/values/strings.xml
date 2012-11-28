@@ -15,7 +15,7 @@
     <string name="fre">Freitag</string>
     <string name="finden">Raum finden</string>
     <string name="etage">Auf welcher Etage befindest du dich?</string>
-    <string name="test">Hier kommt der ermittelte Standort rein</string>
+    <string name="test">Standort wird ermittelt...</string>
     <string name="vorlesung">Raum und Vorlesung</string>
     <string name="ziel">Zielraum</string>
     <string name="eingabe_button">Senden</string>
@@ -31,5 +31,8 @@
     <string name="suchen">Suchen</string>
     <string name="raumnummerinfo">Bitte gebe nur die Raumnummer ohne den Buchstaben an. Wenn du auf Senden drückst wird dein gesuchter Raum angezeigt in dem gewünschten Gebäude.</string>
     <string name="en_welcomeRS">Welcome by Room Search</string>
+    <string name="view_raum">Vorlesung</string>
+    <string name="button_leer">num</string>
+    <string name="_placeholder">-</string>
 
 </resources>

@@ -7,10 +7,19 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+/**
+ * 
+ * 
+ * @author Andreas Oettinger
+ *
+ */
 public class GastNavSicht extends Activity implements OnClickListener {
 	@SuppressWarnings("unused")
 	private Button beuth, stras, gauss, bauwesen;
 	
+	/**
+	 * In der Ansicht wird der Campusplan für den Besucher angezeigt 
+	 */
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +56,10 @@ public class GastNavSicht extends Activity implements OnClickListener {
 		}*/
 	}
 	
+	/**
+	 * Wenn der zurück Button auf Handy gedrückt wird soll eine bestimmte
+	 * Ansicht gesetzt werden.
+	 */
 	@Override
 	public void onBackPressed() {
 		// TODO Automatisch generierter Methodenstub

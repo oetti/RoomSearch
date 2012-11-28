@@ -27,49 +27,85 @@ import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Kameraansicht
+ * Mit dieser Klasse wird der Nutzer zu seinen Raum geführt.
+ * Durch Augmented Reality kann der Nutzer visuell seinen Zielraum sehen, welche Richtung er gehen muss, Informationen
+ * zum Raum und wieviel Meter er vom Zielraum entfernt ist.
+ *   
+ * @author Andreas Oettinger
+ * 
+ */
 public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnClickListener {
+	// Vorlesungsraum und welche Vorlesung
 	private String vorlesung;
+	// Kamera Zugriff auf die Hardware des Handys auf Androidbasis 
 	private android.hardware.Camera cam;
+	// Auf dieser Fläche wird die Aufnahme der Kamera gezeichnet 
 	private SurfaceView camView;
 	private SurfaceHolder holder;
 	private boolean previewing = false;
+	// In diesem Button wird die Zielraumnummer angezeigt 
 	private Button raumnummer;
+	// Zeichenfläche
 	private Canvas canvas = new Canvas();
+	// Zeichenkomponenten festlegen durch Paint
 	private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	// dummy Raumposition
 	private double[] raumPos = {6, 123};
-	// WifiManager
+	// WifiManager greift auf das WLan oder Gps von dem Handy zu
 	private WifiManager wifi;
 	boolean wifiWasEnabled;
 	@SuppressWarnings("unused")
 	private int networkID = -1;
+	//erbt von BroadcastReceiver behandelt eingehende Signale
 	WifiReceiver wr;
+	// zeigt die Richtung des Zielraumes an
 	public ImageView pfeil;
 	// Kompass
 	private static SensorManager sensorService;
 	private Sensor sensor;
+	// zeigt den Abstand zwischen Person und Zielraum (in Meter)
+	public TextView abstandView;
 	
-	
+	/**
+	 * In dieser Klasse wird die Ansicht erstellt.
+	 */
 	@SuppressWarnings("deprecation")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // übernimmt und speichert Daten von Activities
         Intent intent = getIntent();
+        // uebergibt Daten weiter uebermittelte Daten der vorigen Activity
+        // von Nav_Sicht.java
         this.vorlesung = intent.getExtras().getString("Vorlesung");
+        // von Gast_Frage_Sicht.java
         String raumnum = intent.getExtras().getString("Nummer");
+        // setzt die View als aktuelle anzusehende View
         setContentView(R.layout.cam_nav_sicht);
         
-        // Wlan Location
+        /*
+         * Wifi Manager (Zugriff auf WLan und GPS)
+         */
+        // Den Service setzen der Activity
         wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        // der WifiManager wird freigeschaltet
         wifiWasEnabled = wifi.isWifiEnabled();
+        // BroadcastReceiver erzeugen und zuweisen
         wr = new WifiReceiver(this);
+        //
         IntentFilter i = new IntentFilter();
         i.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
         registerReceiver(wr,i);
+        // Netzwerk ID setzen
+        // testen ob die beiden unteren Methoden entfernt werden können
         networkID = wifi.getConnectionInfo().getNetworkId();
         wifi.startScan();
-        
-        // Kompass location
+     
+        /*
+         *  Kompass
+         */
         sensorService = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorService.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         if (sensor != null) {
@@ -84,13 +120,16 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
           finish();
         }
         
+        // reine Raumnummer setzen z.B. "341"
         String nummer = "";
-        
+        // In dieser View wird der Raum + die Vorlesung dann gesetzt
         TextView raum = (TextView) findViewById(R.id.textView_raum);
         
-        // Icon
+        // dieser Button zeigt an welcher Raum ausgewählt wurde
         raumnummer = (Button) findViewById(R.id.button_raum);
         
+        // ist die Vorlesung nicht leer splitte den String und
+        // nehme den Index 1 aus dem Array und setze ihn als Raumnummer
         if(vorlesung != null) {
         	String[] split = vorlesung.split(" ");
         	nummer = split[1];
@@ -100,6 +139,7 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
         	raum.setText(vorlesung);
         }
         
+        // ist der String Raumnum nicht leer setze ihn als Raumnummer
         if(raumnum != null) {
         	raumnummer.setText(raumnum);
         	
@@ -107,34 +147,48 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
         	raum.setText(raumnum);
         }
         
+        // EventListener wenn der Button geklickt wird
         raumnummer.setOnClickListener(this);        
                
         // SlideDrawer für Raumplan
         View view = findViewById(R.id.view1);
+        // Stimmt die Nummer überein setze den Raumplan in den SlideDrawer
         if(nummer.equals("341")) {
         	 view.setBackgroundResource(R.drawable.ic2_stundenplan);
         }
                 
-        // Camera
+        /*
+         *  Kamera
+         */
+        // In dieser SurfaceView wird das Kamerabild gezeichnet
         camView = (SurfaceView) findViewById(R.id.surfaceView1);
         holder = camView.getHolder();
         holder.addCallback(this);
         
-        // Paint Linie
-        
-        // Pfeil
+        /*
+         *  Richtungspfeil
+         */
         pfeil = (ImageView) findViewById(R.id.pfeil_richtung);
-       
+        abstandView = (TextView) findViewById(R.id.text_abstand);
 	}
 	
+	/**
+	 * In dieser Klasse wird SensorEventListener erstellt
+	 */
 	private SensorEventListener mySensorEventListener = new SensorEventListener() {
 
 	    public void onAccuracyChanged(Sensor sensor, int accuracy) {
 	    }
 
+	    /**
+	     * Wechselt die Richtung des Handies von Norden nach Osten wird 
+	     * darauf hier reagiert
+	     */
 	    public void onSensorChanged(SensorEvent event) {
-	      float azimuth = event.values[0];
-	      wr.updateData(azimuth);
+	    	// gibt die Gradzahl des Kompass anhand des Nordens an
+	    	float azimuth = event.values[0];
+	    	// übergebe den Wert zum Receiver
+	    	wr.updateData(azimuth);
 	    }
 	  };
 	  
@@ -146,13 +200,17 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 	    }
 	  }
 
-	/*
-	 * gibt die Raumposition wieder
+	/**
+	 * Gibt die Position des Raumes im Kordinatensystem wieder.
 	 */
 	public double[] getRaumPosition() {
 		return raumPos;
 	}
 	
+	/**
+	 * In dieser Methode wird darauf reagiert wenn die SurfaceView neu gezeichnet
+	 * werden muss.
+	 */
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
 		paint.setColor(Color.GREEN);
         paint.setStrokeWidth(4.0f);
@@ -167,26 +225,36 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 		
 		if (cam != null){
 			 try {
-			  cam.setPreviewDisplay(holder);
-			  cam.setDisplayOrientation(90);
-			  cam.startPreview();
-			  //camView.buildDrawingCache();
-			  previewing = true;
+				 cam.setPreviewDisplay(holder);
+				 cam.setDisplayOrientation(90);
+				 cam.startPreview();
+				 previewing = true;
 			 } catch (IOException e) {
-			  // TODO Auto-generated catch block
-			  e.printStackTrace();
+				 e.printStackTrace();
 			 }
 		}
 	}
 
+	/**
+	 * Gibt den WifiManager wieder.
+	 * 
+	 * @return WifiManager
+	 */
 	public WifiManager getWifi() {
 	      return wifi;
 	}
 	
+	/**
+	 * Wird eine SurfaceView erstellt setze die Kamera.
+	 */
 	public void surfaceCreated(SurfaceHolder holder) {
 		cam = android.hardware.Camera.open();	 
 	}
 
+	/**
+	 * Wird die SurfaceView gelöscht, stoppe die Kameraaufnahme, gebe sie wieder frei
+	 * und setze sie auf null.
+	 */
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		cam.stopPreview();
 		cam.release();
@@ -198,7 +266,7 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 		SlidingDrawer slider = (SlidingDrawer) findViewById(R.id.slidingDrawer1);
 		slider.animateOpen();
 	}
-
+/*	
 	class MySurfaceView extends SurfaceView implements Runnable{
 
 		public MySurfaceView(Context context) {
@@ -210,5 +278,5 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 			// TODO Automatisch generierter Methodenstub
 			
 		}
-	}
+	}*/
 }
