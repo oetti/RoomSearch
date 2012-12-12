@@ -22,17 +22,32 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
-            <TextView
-                android:id="@+id/textView1"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/test" />
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="124dp"
+                    android:gravity="center"
+                    android:text="@string/test" />
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="138dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:text="@string/qr_code" />
+
+            </LinearLayout>
+
         </FrameLayout>
 
     </LinearLayout>
-
-    <RelativeLayout
+
+    <AbsoluteLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
@@ -44,15 +59,41 @@
 
         <Button
             android:id="@+id/gauss_button"
-            style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="61dp"
-            android:layout_marginLeft="79dp"
-            android:background="@drawable/select_button" />
+            android:layout_x="85dp"
+            android:layout_y="183dp"
+            android:rotation="-40" 
+            android:background= "@drawable/v_button"/>
+        	
 
-    </RelativeLayout>
+        <Button
+            android:id="@+id/grashof_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="157dp"
+            android:layout_y="122dp"
+            android:rotation="-40"
+            android:background= "@drawable/v_button" />
+
+        <Button
+            android:id="@+id/beuth_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="114dp"
+            android:layout_y="73dp"
+            android:rotation="-40"
+            android:background= "@drawable/v_button" />
+
+        <Button
+            android:id="@+id/bauwesen_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="240dp"
+            android:layout_y="64dp"
+            android:rotation="-40"
+            android:background= "@drawable/v_button" />
+
+    </AbsoluteLayout>
 
 </LinearLayout>

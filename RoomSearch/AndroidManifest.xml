@@ -29,7 +29,8 @@
             </intent-filter>
         </activity>
         <activity android:name="NavSicht"></activity>
-        <activity android:name="CamNavSicht"></activity>
+        <activity android:name="CamNavSicht"
+            	  android:screenOrientation="portrait"></activity>
         <activity android:name="LoginSicht"></activity>
         <activity android:name="UebergangSicht"></activity>
         <activity android:name="NavSichtDoz"></activity>

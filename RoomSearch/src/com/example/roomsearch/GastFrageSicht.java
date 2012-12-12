@@ -1,9 +1,15 @@
 package com.example.roomsearch;
 
+import Datenbank.ActivityRegistry;
 import Datenbank.Hausverwaltung;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,7 +23,7 @@ import android.widget.Toast;
  * @author Andreas Oettinger
  *
  */
-public class GastFrageSicht extends Activity implements OnClickListener {
+public class GastFrageSicht extends Activity implements OnClickListener, OnMenuItemClickListener {
 	private Button suchen;
 	// In dieser Klasser wird die eingebene Raumnummer überprüft.
 	private Hausverwaltung h = new Hausverwaltung();
@@ -32,6 +38,7 @@ public class GastFrageSicht extends Activity implements OnClickListener {
         String haus ="Du hast das Haus " + intent.getExtras().getString("Haus") + " ausgewählt.";
         // setzt die View als aktuelle anzusehende View
         setContentView(R.layout.gast_frage_sicht);
+        ActivityRegistry.register(this);
         // Überschrift welches Haus ausgewählt wurde
         TextView hausname = (TextView) findViewById(R.id.text_info_haus);
         // Gebäudename z.B. Gauss
@@ -40,6 +47,39 @@ public class GastFrageSicht extends Activity implements OnClickListener {
         // Suche-Button
         suchen = (Button) findViewById(R.id.suchen_button);
         suchen.setOnClickListener(this);
+	}
+	
+	/**
+	 * Menu Optionen
+	 */
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_room_search, menu);
+        menu.getItem(3).setVisible(false);
+        for(int i = 0; i < menu.size(); i++) {
+        	menu.getItem(i).setOnMenuItemClickListener(this);
+        }
+        
+        return true;
+    }
+
+	public boolean onMenuItemClick(MenuItem item) {
+		if(item.getTitle().equals("Beenden")){
+			AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
+			 myAlertDialog.setTitle("Beenden");
+			 myAlertDialog.setMessage("Willst du Room Search wirklich beenden?");
+			 myAlertDialog.setPositiveButton("ja", new DialogInterface.OnClickListener() {
+			 public void onClick(DialogInterface arg0, int arg1) {
+				 ActivityRegistry.finishAll();
+			 }});
+			 myAlertDialog.setNegativeButton("nein", new DialogInterface.OnClickListener() {
+			 public void onClick(DialogInterface arg0, int arg1) {
+				  // tue nicht
+			 }});
+			 
+			 myAlertDialog.show();
+		}
+		return false;
 	}
 	
 	/**

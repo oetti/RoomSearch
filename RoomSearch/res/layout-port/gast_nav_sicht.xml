@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:id="@+id/text_wHaus"
@@ -12,8 +11,8 @@
         android:layout_marginTop="10dip"
         android:text="@string/w_haus"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <RelativeLayout
+
+    <AbsoluteLayout
         android:layout_width="match_parent"
         android:layout_height="350dp" >
 
@@ -22,31 +21,70 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/campus_lageplan" />
+
+        <Button
+            android:id="@+id/beuth_button"
+            android:layout_width="89dp"
+            android:layout_height="63dp"
+            android:layout_marginTop="32dp"
+            android:layout_x="76dp"
+            android:layout_y="85dp"
+            android:rotation="-40"
+            android:background = "@drawable/v_button" />
+
+        <Button
+            android:id="@+id/bauwesen_button"
+            android:layout_width="91dp"
+            android:layout_height="87dp"
+            android:layout_x="217dp"
+            android:layout_y="72dp"
+            android:rotation="-40"
+            android:background = "@drawable/v_button" />
+
+        <Button
+            android:id="@+id/grashof_button"
+            android:layout_width="91dp"
+            android:layout_height="62dp"
+            android:layout_x="116dp"
+            android:layout_y="144dp"
+            android:rotation="-40"
+            android:background = "@drawable/v_button" />
 
         <Button
             android:id="@+id/gauss_button"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="87dp"
-            android:layout_marginLeft="46dp"
-            android:background="@drawable/select_button" />
+            android:layout_width="91dp"
+            android:layout_height="72dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="60dp"
+            android:layout_x="30dp"
+            android:layout_y="202dp"
+            android:rotation="-40"
+            android:background = "@drawable/v_button"
+            />
 
-    </RelativeLayout>
+    </AbsoluteLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center" >
-
-        <TextView
-            android:id="@+id/textView1"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/test" />
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="206dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/test" /><Button
+                android:id="@+id/button1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/qr_code" />
+
+        </LinearLayout>
 
     </FrameLayout>
 

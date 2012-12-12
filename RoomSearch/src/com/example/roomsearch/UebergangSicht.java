@@ -1,5 +1,6 @@
 package com.example.roomsearch;
 
+import Datenbank.ActivityRegistry;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ public class UebergangSicht extends Activity {
         // Identität
         final int id = intent.getExtras().getInt("ID");
         setContentView(R.layout.uebergang_sicht);
+        ActivityRegistry.register(this);
         
         // Begruessung beim laden
         TextView text = (TextView) findViewById(R.id.begruessung_text);

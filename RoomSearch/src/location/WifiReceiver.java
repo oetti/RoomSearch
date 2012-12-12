@@ -8,7 +8,7 @@ import com.example.roomsearch.NavSicht;
 import com.example.roomsearch.R;
 import location.MacAdressen;
 import location.Positionen;
-import location.Trilateration;
+//import location.Trilateration;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -49,7 +49,6 @@ public class WifiReceiver extends BroadcastReceiver{
 		}*/	
 	}
 	
-	
 	@Override
 	public void onReceive(Context ctx, Intent intent) {
 		if(restartingLocation!=null)
@@ -67,7 +66,6 @@ public class WifiReceiver extends BroadcastReceiver{
 		
 			if (act instanceof CamNavSicht) {
 				wifi = ((CamNavSicht) act).getWifi();
-				System.out.println("CamNavSicht: Wifi wurde gesetzt");
 			}
 			
 			//if (act instanceof GastNavSicht) {
@@ -78,7 +76,7 @@ public class WifiReceiver extends BroadcastReceiver{
 	    wifi.startScan();
 	    @SuppressWarnings("rawtypes")
 		List db = wifi.getScanResults();
-	    
+	    /*
 	    // Iteriere über diese Liste
 	    @SuppressWarnings("rawtypes")
 		Iterator it = db.iterator();
@@ -99,45 +97,80 @@ public class WifiReceiver extends BroadcastReceiver{
 	    // wlan2 kordinatenpunkte  
 	    double[] w2 = m.getAPPPosition(sortList.get(1).BSSID);
 	    // wlan3 kordinatenpunkte  
-	    double[] w3 = null;
+	    double[] w3 = m.getAPPPosition(sortList.get(2).BSSID);
+	    // wlan4 kordinatenpunkte 
+	    double[] w4 = m.getAPPPosition(sortList.get(3).BSSID);
 	    // extiert ein dritter gibt die Position
 	    if(sortList.size() > 2) {
 	    	w3 = m.getAPPPosition(sortList.get(2).BSSID);
 	    }
 	    
-	    // wlan positionen x und y und distanz
-	    double[] wlan1 = {w1[0], w1[1], sortList.get(0).level};
-	    double[] wlan2 = {w2[0], w2[1], sortList.get(1).level};
-	    double[] wlan3 = new double[3];
-	    // generierter 4. Accesspoint  {wlan2[x], wlan1[y], distanz wlan1 + distanz wlan2 / 2.54} 
-	    //double[] wlan4 = {w2[0], w1[1], ((((sortList.get(0).level + 32.0f) / -3f)+((sortList.get(0).level + 32.0f))) / 2.50)};
-	   // System.out.println(sortList.size());
+	    if(sortList.size() > 3) {
+	    	w4 = m.getAPPPosition(sortList.get(3).BSSID);
+	    }
 	    
-	    // existiert kein dritter Accesspoint, generiere einen 
+	    // wlan positionen x und y und distanz
+	    double[] wlan1 = {w1[0], w1[1], w1[2], sortList.get(0).level};
+	    double[] wlan2 = {w2[0], w2[1], w2[2], sortList.get(1).level};
+	    double[] wlan3 = {w3[0], w3[1], w3[2], sortList.get(2).level};
+	    double[] wlan4 = {w4[0], w4[1], w4[2], sortList.get(2).level};
+	    
+	    /* existiert kein dritter Accesspoint, generiere einen 
 	    if(sortList.size() > 2) {
 	    	wlan3[0] = w3[0];
 	    	wlan3[1] = w3[1];
-	    	wlan3[2] = sortList.get(2).level;
+	    	wlan3[2] = w3[2];
+	    	wlan3[3] = sortList.get(2).level;
 	    	erzeugterPunkt = false;
 	    } else {
 	    	// generierter 3. Accesspoint  {wlan1[x], wlan2[y], distanz wlan1 + distanz wlan2 / 2.50}
 	    	wlan3[0] = w1[0];
 	    	wlan3[1] = w2[1];
+	    	wlan3[2] = w1[2];
 	    	// Kontrolle stimmt noch nicht alles siehe gene. punkt 4 die formel
-	    	wlan3[2] = ((sortList.get(0).level + sortList.get(1).level) / 2);
+	    	wlan3[3] = ((sortList.get(0).level + sortList.get(1).level));
 	    	erzeugterPunkt = true;
 	    }
+	    
+	 // existiert kein vierten Accesspoint, generiere einen 
+	    if(sortList.size() > 3) {
+	    	wlan4[0] = w4[0];
+	    	wlan4[1] = w4[1];
+	    	wlan4[2] = w4[2];
+	    	wlan4[3] = sortList.get(3).level;
+	    	erzeugterPunkt = false;
+	    } else {
+	    	// generierter 4. Accesspoint  {wlan1[x], wlan2[y], distanz wlan1 + distanz wlan2 / 2.50}
+	    	wlan3[0] = w2[0];
+	    	wlan3[1] = w1[1];
+	    	wlan3[2] = w2[2];
+	    	// Kontrolle stimmt noch nicht alles siehe gene. punkt 4 die formel
+	    	wlan3[3] = ((sortList.get(0).level + sortList.get(1).level));
+	    	erzeugterPunkt = true;
+	    }*/
 	    /*
 	    System.out.println("w1: " + wlan1[0] + " w2: " + wlan1[1] + " w3: " + wlan1[2]);
 	    System.out.println("w1: " + wlan2[0] + " w2: " + wlan2[1] + " w3: " + wlan2[2]);
 	    System.out.println("w1: " + wlan3[0] + " w2: " + wlan3[1] + " w3: " + wlan3[2]);
-	    */
 	    
-	   // Trilation: Berechnung von einem Schnittpunkt aus drei Kreisen
-	   Trilateration t = new Trilateration(this);
+	   ArrayList<double[]> wLanPoints = new ArrayList<double[]>();
+	   wLanPoints.add(wlan1);
+	   wLanPoints.add(wlan2);
+	   wLanPoints.add(wlan3);
+	   wLanPoints.add(wlan4);
 	   
-	   // Errechne meine Location
-	   double[] location = t.rechnen(wlan1, wlan2, wlan3);
+	   // 2d Lokalisation
+	   // Trilation: Berechnung von einem Schnittpunkt aus drei Kreisen
+	   //Trilateration t = new Trilateration(this);
+	   //double[] location = t.rechnen(wLanPoints);
+	   
+	   // 3d Lokalisation
+	   //Multi multi = new Multi(this);
+	   //double[] location = multi.rechnen(wLanPoints, wLanPoints.size());
+	   */
+	   // fester Standort generiert
+	   double[] location = {9, 111};
+	   
 	   // sind der x und y wert Not a Number oder Infinity gib gespeicherte Position wieder
 	   if((Double.isNaN(location[0]) || Double.isInfinite(location[0])) || (Double.isNaN(location[1]) || Double.isInfinite(location[1]))) {
 		  location = positionSAVE;
@@ -156,17 +189,20 @@ public class WifiReceiver extends BroadcastReceiver{
 	   
 	   // Klasse Position für Besonderheiten bestimmter Bereiche z.B. (TH1 z.B.)
 	   Positionen p = new Positionen();
-	 
+	 /*
 	   // ist die Activity die NavSicht dann mache das...
 	   if (act instanceof NavSicht) {
 		   //System.out.println("NavSicht Standort wird ermittelt");
 			String position = //"Gebäude: Haus Beuth\n\n" +
-								//"Etage: 3. Etage\n\n" +
+								"Etage: " + p.getEtage(location[2]) + "\n\n" +
 								"Gebiet: " + p.getPosition(location[0], location[1]) +
 								"\n\nMeine Position: = " + Math.ceil(location[0]) + " y = " + Math.ceil(location[1]) +
-								"\nWlan1 Raum: " + m.getRaum(sortList.get(0).BSSID) + " Abstand: ca. " + Math.round(((sortList.get(0).level + 32.0) / -4.5)) + "m" +
-								"\nWlan2 Raum: " + m.getRaum(sortList.get(1).BSSID) + " Abstand: ca. " + Math.round(((sortList.get(1).level + 32.0) / -4.5)) + "m" +
-								"\nWlan3: x = " + wlan3[0] + " y = " + wlan3[1] + " Abstand: ca. " + Math.round(((wlan3[2]+32.0) / -4.5)) + "m | Erzeugt: " + erzeugterPunkt;
+								"\nWlan1 Raum: " + m.getRaum(sortList.get(0).BSSID) + " Abstand: ca. " + Math.round(((sortList.get(0).level + 32.0) / -4.5)) + "m | Signal: " + 
+								sortList.get(0).level +
+								"\nWlan2 Raum: " + m.getRaum(sortList.get(1).BSSID) + " Abstand: ca. " + Math.round(((sortList.get(1).level + 32.0) / -4.5)) + "m | Signal: " +
+								sortList.get(1).level +
+								"\nWlan3: Raum = " + m.getRaum(sortList.get(2).BSSID) + " Abstand: ca. " + Math.round(((sortList.get(2).level + 32.0) / -4.5)) + "m | Erzeugt: " + sortList.get(2).level +
+								"\nWlan3: Raum = " + m.getRaum(sortList.get(3).BSSID) + " Abstand: ca. " + Math.round(((sortList.get(3).level + 32.0) / -4.5)) + "m | Erzeugt: " + sortList.get(3).level;
 		
 			((NavSicht) act).standort.setText(position);
 	   }
@@ -175,7 +211,7 @@ public class WifiReceiver extends BroadcastReceiver{
 			
 		}*/
 		if (act instanceof CamNavSicht) { 
-			System.out.println("CamNavSicht Standort und Ziel wird ermittelt");
+			//System.out.println("CamNavSicht Standort und Ziel wird ermittelt");
 			
 			
 	   		// errechnen des neuen Vektors
@@ -203,10 +239,9 @@ public class WifiReceiver extends BroadcastReceiver{
 	}
 	
 	public void updateData(float position) {
-		System.out.println("Grad unbehandelt: " + gradUG);  
-	    double grad = 360 - position - 90 + gradUG;
-	    System.out.println("Postion: " + position);
-	    System.out.println("Endgrad: " + grad);
+	    double grad = (position-360)+(360+gradUG);
+		//System.out.println("Postion: " + position);
+	    System.out.println("Errechneter Grad: " + gradUG +"° - Endgrad: " + grad + "°");
 	    
 	   // je nach Gradzahl wird ein anderer Pfeil als image gesetzt
 	  		if(grad > 0 && grad < 10) {((CamNavSicht) act).pfeil.setBackgroundResource(R.drawable.pfeil_0);}

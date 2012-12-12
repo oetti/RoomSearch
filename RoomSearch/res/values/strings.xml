@@ -34,5 +34,7 @@
     <string name="view_raum">Vorlesung</string>
     <string name="button_leer">num</string>
     <string name="_placeholder">-</string>
+    <string name="einstellung">Einstellungen</string>
+    <string name="qr_code">QR-Code</string>
 
 </resources>

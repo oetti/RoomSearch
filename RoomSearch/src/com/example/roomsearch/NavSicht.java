@@ -1,31 +1,37 @@
 package com.example.roomsearch;
 
 import location.WifiReceiver;
+import Datenbank.ActivityRegistry;
 import Datenbank.Datenbank;
 import Datenbank.Listfiller;
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.Spinner;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class NavSicht extends Activity implements OnClickListener, OnCheckedChangeListener{
+public class NavSicht extends Activity implements OnClickListener, OnMenuItemClickListener, OnItemLongClickListener, OnItemClickListener {
 	private Listfiller filler = new Listfiller();
+	private Button finden;
 	// Liste von Vorlesungen
-	private Spinner spinMon, spinDie, spinMit, spinDon, spinFre;
-	// Aktivieren der Vorlesung zum weiteren auswerten
-	private CheckBox chMo, chDi, chMi, chDo, chFr;
+	private ListView mo, di, mi, don, fr; 
+	private View selectedItem = null;
+	private String selectedItemString = "";
 	// View für den Standort
 	public TextView standort;
 	// Dateninhalte
@@ -34,15 +40,16 @@ public class NavSicht extends Activity implements OnClickListener, OnCheckedChan
 	boolean wifiWasEnabled;
 	@SuppressWarnings("unused")
 	private int networkID = -1;
-	WifiReceiver wr;
+	private WifiReceiver wr;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_sicht);
+        ActivityRegistry.register(this);
         /*
          *  Wlan Location
-         */
+         
         wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         wifiWasEnabled = wifi.isWifiEnabled();
         wr = new WifiReceiver(this);
@@ -51,51 +58,88 @@ public class NavSicht extends Activity implements OnClickListener, OnCheckedChan
         registerReceiver(wr,i);
         networkID = wifi.getConnectionInfo().getNetworkId();
         wifi.startScan();
-        
+        */
         /*
          * Stundenlan
          */
         // Vorlesungen Montag
-        spinMon = (Spinner) findViewById(R.id.spinner_mon);
+        
+        mo = (ListView) findViewById(R.id.ListMo); 
         ArrayAdapter<String> sAmon = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, filler.montag()); 
-        spinMon.setAdapter(sAmon);
+        mo.setBackgroundColor(Color.WHITE);
+        mo.setAdapter(sAmon);
+        mo.setOnItemLongClickListener(this);
+        mo.setOnItemClickListener(this);
         // Vorlesungen Dienstag
-        spinDie = (Spinner) findViewById(R.id.spin_die);
+        di = (ListView) findViewById(R.id.ListDi);
         ArrayAdapter<String> sAdie = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, filler.dienstag()); 
-        spinDie.setAdapter(sAdie);
+        di.setBackgroundColor(Color.WHITE);
+        di.setAdapter(sAdie);
+        di.setOnItemLongClickListener(this);
+        di.setOnItemClickListener(this);
         // Vorlesungen Mittwoch
-        spinMit = (Spinner) findViewById(R.id.spin_mit);
+        mi = (ListView) findViewById(R.id.ListMi);
         ArrayAdapter<String> sAmit = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, filler.mittwoch()); 
-        spinMit.setAdapter(sAmit);
+        mi.setBackgroundColor(Color.WHITE);
+        mi.setAdapter(sAmit);
+        mi.setOnItemLongClickListener(this);
+        mi.setOnItemClickListener(this);
         // Vorlesungen Donnerstag
-        spinDon = (Spinner) findViewById(R.id.spinner_don);
+        don = (ListView) findViewById(R.id.ListDo);
         ArrayAdapter<String> sAdon = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, filler.donnerstag()); 
-        spinDon.setAdapter(sAdon);
+        don.setBackgroundColor(Color.WHITE);
+        don.setAdapter(sAdon);
+        don.setOnItemLongClickListener(this);
+        don.setOnItemClickListener(this);
         // Vorlesungen Freitag
-        spinFre = (Spinner) findViewById(R.id.spinner_fre);
+        fr = (ListView) findViewById(R.id.ListFr);
         ArrayAdapter<String> sAfre = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, filler.freitag()); 
-        spinFre.setAdapter(sAfre);
-        // CheckBoxen
-        chMo = (CheckBox)findViewById(R.id.checkBox_mon);
-		chDi = (CheckBox)findViewById(R.id.checkBox_die);
-		chMi = (CheckBox)findViewById(R.id.checkBox_mit);
-		chDo = (CheckBox)findViewById(R.id.checkBox_don);
-		chFr = (CheckBox)findViewById(R.id.checkBox_fre);
-		// Checkbox-Listener
-		chMo.setOnCheckedChangeListener(this);
-		chDi.setOnCheckedChangeListener(this);
-		chMi.setOnCheckedChangeListener(this);
-		chDo.setOnCheckedChangeListener(this);
-		chFr.setOnCheckedChangeListener(this);
+        fr.setBackgroundColor(Color.WHITE);
+        fr.setAdapter(sAfre);
+        fr.setOnItemLongClickListener(this);
+        fr.setOnItemClickListener(this);
         
 		/*
          * Standort
          */
         standort = (TextView)findViewById(R.id.textView2);
+        standort.setBackgroundColor(Color.WHITE);
         
         // Button Raum finden
-        Button finden = (Button) findViewById(R.id.button_finden);
+        finden = (Button) findViewById(R.id.button_finden);
         finden.setOnClickListener(this);
+	}
+	
+	/**
+	 * Menu Optionen
+	 */
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_room_search, menu);
+        for(int i = 0; i < menu.size(); i++) {
+        	menu.getItem(i).setOnMenuItemClickListener(this);
+        }
+        
+        return true;
+    }
+
+	public boolean onMenuItemClick(MenuItem item) {
+		if(item.getTitle().equals("Beenden")){
+			AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
+			 myAlertDialog.setTitle("Beenden");
+			 myAlertDialog.setMessage("Willst du Room Search wirklich beenden?");
+			 myAlertDialog.setPositiveButton("ja", new DialogInterface.OnClickListener() {
+			 public void onClick(DialogInterface arg0, int arg1) {
+				 ActivityRegistry.finishAll();
+			 }});
+			 myAlertDialog.setNegativeButton("nein", new DialogInterface.OnClickListener() {
+			 public void onClick(DialogInterface arg0, int arg1) {
+				  // tue nicht
+			 }});
+			 
+			 myAlertDialog.show();
+		}
+		return false;
 	}
 	
 	public WifiManager getWifi() {
@@ -112,103 +156,23 @@ public class NavSicht extends Activity implements OnClickListener, OnCheckedChan
 	}
 
 	public void onClick(View v) {
-		// von NavSicht zu CamNavSicht
-		final Intent in = new Intent (NavSicht.this, CamNavSicht.class);
+		if (v == finden) {
+			// von NavSicht zu CamNavSicht
+			final Intent in = new Intent (NavSicht.this, CamNavSicht.class);
 			
-		Spinner spin = null;
-		
-		if(chMo.isChecked()){
-			spin = spinMon;
-		}
-		
-		if(chDi.isChecked()){
-			spin = spinDie;
-		}
-		
-		if(chMi.isChecked()){
-			spin = spinMit;
-		}
-		
-		if(chDo.isChecked()){
-			spin = spinDon;
-		}
-		
-		if(chFr.isChecked()){
-			spin = spinFre;
-		}
-		
-		try {
-		dt = new Datenbank(spin.getSelectedItem().toString());
-		in.putExtra("Vorlesung", dt.getVorlesung());
-		startActivity(in);
-		} catch (NullPointerException e) {
-			Toast toast = Toast.makeText(this, "Bitte im Stundenplan eine Vorlesung auswählen!", Toast.LENGTH_SHORT);
-			toast.show(); 
-		}		
-	}
-
-	/**
-	 * Kontrolliert ob eine der Checkboxen sich ändert
-	 */
-	public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-		if(arg0 == chMo) {
-			if(arg1 == true) {
-				chMo.setText("ausgewählt");
-				chDi.setChecked(false);
-				chMi.setChecked(false);
-				chDo.setChecked(false);
-				chFr.setChecked(false);
-			} else {
-				chMo.setText(R.string.aktiv);
-			}
-		}
-		
-		if(arg0 == chDi) {
-			if(arg1 == true) {
-				chDi.setText("ausgewählt");
-				chMo.setChecked(false);
-				chMi.setChecked(false);
-				chDo.setChecked(false);
-				chFr.setChecked(false);
-			} else {
-				chDi.setText(R.string.aktiv);
-			}
-		}
-		
-		if(arg0 == chMi) {
-			if(arg1 == true) {
-				chMi.setText("ausgewählt");
-				chMo.setChecked(false);
-				chDi.setChecked(false);
-				chDo.setChecked(false);
-				chFr.setChecked(false);
-			} else {
-				chMi.setText(R.string.aktiv);
-			}
-		}
-		
-		if(arg0 == chDo) {
-			if(arg1 == true) {
-				chDo.setText("ausgewählt");
-				chMo.setChecked(false);
-				chMi.setChecked(false);
-				chDi.setChecked(false);
-				chFr.setChecked(false);
-			} else {
-				chDo.setText(R.string.aktiv);
-			}
-		}
-		
-		if(arg0 == chFr) {
-			if(arg1 == true) {
-				chFr.setText("ausgewählt");
-				chMo.setChecked(false);
-				chMi.setChecked(false);
-				chDo.setChecked(false);
-				chDi.setChecked(false);
-			} else {
-				chFr.setText(R.string.aktiv);
-			}
+			try {
+				if(selectedItemString.length() == 0) {
+					Toast toast = Toast.makeText(this, "Bitte im Stundenplan eine Vorlesung auswählen!", Toast.LENGTH_SHORT);
+					toast.show(); 
+				} else {
+					dt = new Datenbank(selectedItemString);
+					in.putExtra("Vorlesung", dt.getVorlesung());
+					startActivity(in);
+				}
+			} catch (NullPointerException e) {
+				Toast toast = Toast.makeText(this, "Bitte im Stundenplan eine Vorlesung auswählen!", Toast.LENGTH_SHORT);
+				toast.show(); 
+			}	
 		}
 	}
 	
@@ -218,5 +182,178 @@ public class NavSicht extends Activity implements OnClickListener, OnCheckedChan
 		super.onBackPressed();
 		final Intent in = new Intent (NavSicht.this, LoginSicht.class);
 			startActivity(in);  
+	}
+
+	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2,
+			long arg3) {
+		
+		System.out.println();
+		
+		if(arg0.getId() == mo.getId()) {
+			for(int k = 0; k < mo.getCount(); k++) {
+				if(arg2 == k) {
+					if(!arg0.getAdapter().getItem(arg2).equals("")) {
+					AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
+					 myAlertDialog.setTitle("Vorlesungszeit");
+					 myAlertDialog.setMessage(filler.zeit().get(k));
+					 myAlertDialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+						 public void onClick(DialogInterface arg0, int arg1) {
+						 }});
+					 myAlertDialog.show();
+					} else {
+						arg1.setLongClickable(false);
+					}
+				}
+			}
+		}
+			
+		if(arg0.getId() == di.getId()) {
+			for(int k = 0; k < di.getCount(); k++) {
+				if(arg2 == k) {
+					if(!arg0.getAdapter().getItem(arg2).equals("")) {
+					AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
+					 myAlertDialog.setTitle("Vorlesungszeit");
+					 myAlertDialog.setMessage(filler.zeit().get(k));
+					 myAlertDialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+						 public void onClick(DialogInterface arg0, int arg1) {
+						 }});
+					 myAlertDialog.show();
+					} else {
+						arg1.setLongClickable(false);
+					}
+				}
+			}
+		}
+		
+		if(arg0.getId() == mi.getId()) {
+			for(int k = 0; k < mi.getCount(); k++) {
+				if(arg2 == k) {
+					if(!arg0.getAdapter().getItem(arg2).equals("")) {
+					AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
+					 myAlertDialog.setTitle("Vorlesungszeit");
+					 myAlertDialog.setMessage(filler.zeit().get(k));
+					 myAlertDialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+						 public void onClick(DialogInterface arg0, int arg1) {
+						 }});
+					 myAlertDialog.show();
+					} else {
+						arg1.setLongClickable(false);
+					}
+				}
+			}
+		}
+			
+		if(arg0.getId() == don.getId()) {
+			for(int k = 0; k < don.getCount(); k++) {
+				if(arg2 == k) {
+					if(!arg0.getAdapter().getItem(arg2).equals("")) {
+					AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
+					 myAlertDialog.setTitle("Vorlesungszeit");
+					 myAlertDialog.setMessage(filler.zeit().get(k));
+					 myAlertDialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+						 public void onClick(DialogInterface arg0, int arg1) {
+						 }});
+					 myAlertDialog.show();
+					} else {
+						arg1.setLongClickable(false);
+					}
+				}
+			}
+		}
+		
+		if(arg0.getId() == fr.getId()) {
+			for(int k = 0; k < fr.getCount(); k++) {
+				if(arg2 == k) {
+					if(!arg0.getAdapter().getItem(arg2).equals("")) {
+					AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
+					 myAlertDialog.setTitle("Vorlesungszeit");
+					 myAlertDialog.setMessage(filler.zeit().get(k));
+					 myAlertDialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+						 public void onClick(DialogInterface arg0, int arg1) {
+						 }});
+					 myAlertDialog.show();
+					} else {
+						arg1.setLongClickable(false);
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		if(selectedItem != null) {
+			selectedItem.setBackgroundColor(Color.WHITE);
+		}
+		
+		if(arg0.getId() == mo.getId()) {
+			for(int k = 0; k < mo.getCount(); k++) {
+				if(arg2 == k) {
+					if(!arg0.getAdapter().getItem(arg2).equals("")) {
+					arg1.setBackgroundColor(Color.RED);
+					selectedItem = arg1;
+					selectedItemString = (String) arg0.getAdapter().getItem(arg2);
+				} else {
+					arg1.setClickable(false);
+				}
+				}
+			}
+		}
+			
+		if(arg0.getId() == di.getId()) {
+			for(int k = 0; k < di.getCount(); k++) {
+				if(arg2 == k) {
+					if(!arg0.getAdapter().getItem(arg2).equals("")) {
+					arg1.setBackgroundColor(Color.RED);
+					selectedItem = arg1;
+					selectedItemString = (String) arg0.getAdapter().getItem(arg2);
+				} else {
+					arg1.setClickable(false);
+				}
+				}
+			}
+		}
+		
+		if(arg0.getId() == mi.getId()) {
+			for(int k = 0; k < mi.getCount(); k++) {
+				if(arg2 == k) {
+					if(!arg0.getAdapter().getItem(arg2).equals("")) {
+					arg1.setBackgroundColor(Color.RED);
+					selectedItem = arg1;
+					selectedItemString = (String) arg0.getAdapter().getItem(arg2);
+				} else {
+					arg1.setClickable(false);
+				}
+				}
+			}
+		}
+			
+		if(arg0.getId() == don.getId()) {
+			for(int k = 0; k < don.getCount(); k++) {
+				if(arg2 == k) {
+					if(!arg0.getAdapter().getItem(arg2).equals("")) {
+					arg1.setBackgroundColor(Color.RED);
+					selectedItem = arg1;
+					selectedItemString = (String) arg0.getAdapter().getItem(arg2);
+				} else {
+					arg1.setClickable(false);
+				}
+				}
+			}
+		}
+		
+		if(arg0.getId() == fr.getId()) {
+			for(int k = 0; k < fr.getCount(); k++) {
+				if(arg2 == k) {
+					if(!arg0.getAdapter().getItem(arg2).equals("")) {
+					arg1.setBackgroundColor(Color.RED);
+					selectedItem = arg1;
+					selectedItemString = (String) arg0.getAdapter().getItem(arg2);
+				} else {
+					arg1.setClickable(false);
+				}
+				}
+			}
+		}
 	}
 }

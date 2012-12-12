@@ -3,13 +3,13 @@ package com.example.roomsearch;
 import java.io.IOException;
 
 import location.WifiReceiver;
+import Datenbank.ActivityRegistry;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -17,13 +17,19 @@ import android.hardware.SensorManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+//import android.widget.RelativeLayout;
 import android.widget.SlidingDrawer;
+import android.widget.SlidingDrawer.OnDrawerCloseListener;
+import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +42,7 @@ import android.widget.Toast;
  * @author Andreas Oettinger
  * 
  */
-public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnClickListener {
+public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnClickListener, OnDrawerCloseListener, OnDrawerOpenListener, OnMenuItemClickListener {
 	// Vorlesungsraum und welche Vorlesung
 	private String vorlesung;
 	// Kamera Zugriff auf die Hardware des Handys auf Androidbasis 
@@ -47,10 +53,8 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 	private boolean previewing = false;
 	// In diesem Button wird die Zielraumnummer angezeigt 
 	private Button raumnummer;
-	// Zeichenfläche
-	private Canvas canvas = new Canvas();
-	// Zeichenkomponenten festlegen durch Paint
-	private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+	
+	private SlidingDrawer slider;
 	// dummy Raumposition
 	private double[] raumPos = {6, 123};
 	// WifiManager greift auf das WLan oder Gps von dem Handy zu
@@ -84,10 +88,11 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
         String raumnum = intent.getExtras().getString("Nummer");
         // setzt die View als aktuelle anzusehende View
         setContentView(R.layout.cam_nav_sicht);
+        ActivityRegistry.register(this);
         
         /*
          * Wifi Manager (Zugriff auf WLan und GPS)
-         */
+        */ 
         // Den Service setzen der Activity
         wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         // der WifiManager wird freigeschaltet
@@ -146,9 +151,13 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
         	// Raum eintragen
         	raum.setText(raumnum);
         }
-        
+   
         // EventListener wenn der Button geklickt wird
-        raumnummer.setOnClickListener(this);        
+        raumnummer.setOnClickListener(this);
+        // EventListener für den Slider
+        slider = (SlidingDrawer) findViewById(R.id.slidingDrawer1);
+        slider.setOnDrawerCloseListener(this);
+        slider.setOnDrawerOpenListener(this);
                
         // SlideDrawer für Raumplan
         View view = findViewById(R.id.view1);
@@ -170,6 +179,42 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
          */
         pfeil = (ImageView) findViewById(R.id.pfeil_richtung);
         abstandView = (TextView) findViewById(R.id.text_abstand);
+        
+        /*
+         *  Button erstellen
+         */   
+	}
+	
+	/**
+	 * Menu Optionen
+	 */
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_room_search, menu);
+        for(int i = 0; i < menu.size(); i++) {
+        	menu.getItem(i).setOnMenuItemClickListener(this);
+        }
+        
+        return true;
+    }
+
+	public boolean onMenuItemClick(MenuItem item) {
+		if(item.getTitle().equals("Beenden")){
+			AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
+			 myAlertDialog.setTitle("Beenden");
+			 myAlertDialog.setMessage("Willst du Room Search wirklich beenden?");
+			 myAlertDialog.setPositiveButton("ja", new DialogInterface.OnClickListener() {
+			 public void onClick(DialogInterface arg0, int arg1) {
+				 ActivityRegistry.finishAll();
+			 }});
+			 myAlertDialog.setNegativeButton("nein", new DialogInterface.OnClickListener() {
+			 public void onClick(DialogInterface arg0, int arg1) {
+				  // tue nicht
+			 }});
+			 
+			 myAlertDialog.show();
+		}
+		return false;
 	}
 	
 	/**
@@ -189,6 +234,7 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 	    	float azimuth = event.values[0];
 	    	// übergebe den Wert zum Receiver
 	    	wr.updateData(azimuth);
+	    	raumnummer.setX(azimuth);
 	    }
 	  };
 	  
@@ -212,11 +258,6 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 	 * werden muss.
 	 */
 	public void surfaceChanged(SurfaceHolder arg0, int arg1, int arg2, int arg3) {
-		paint.setColor(Color.GREEN);
-        paint.setStrokeWidth(4.0f);
-        canvas.drawLine(raumnummer.getX(), raumnummer.getY(), 50, 50, paint);
-        canvas.save();
-        camView.draw(canvas);
 		
 		if(previewing){
 			 cam.stopPreview();
@@ -279,4 +320,12 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 			
 		}
 	}*/
+
+	public void onDrawerClosed() {
+		pfeil.setVisibility(1);
+	}
+
+	public void onDrawerOpened() {
+		pfeil.setVisibility(TRIM_MEMORY_BACKGROUND);
+	}
 }

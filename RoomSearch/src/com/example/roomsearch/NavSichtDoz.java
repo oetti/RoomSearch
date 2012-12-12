@@ -1,5 +1,6 @@
 package com.example.roomsearch;
 
+import Datenbank.ActivityRegistry;
 import android.app.Activity;
 import android.content.Intent;
 //import android.content.Intent;
@@ -11,6 +12,7 @@ public class NavSichtDoz extends Activity {
         super.onCreate(savedInstanceState);
         //Intent intent = getIntent();
         setContentView(R.layout.nav_sicht_doz);
+        ActivityRegistry.register(this);
 	}
 
 	@Override

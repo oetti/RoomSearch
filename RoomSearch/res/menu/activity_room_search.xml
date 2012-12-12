@@ -1,7 +1,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_settings"
-        android:title="@string/menu_settings"
-        android:orderInCategory="100"
-        android:showAsAction="always" android:visible="false" android:menuCategory="container">
+    <item android:id="@+id/item1" android:orderInCategory="100" android:title="Beenden">
+    </item>
+    <item android:id="@+id/item2" android:orderInCategory="1" android:title="Sprache">
+        <menu>
+            <item android:id="@+id/item6" android:title="english"/>
+            <item android:id="@+id/item7" android:title="deutsch"/>
+        </menu>
+    </item>
+    <item android:id="@+id/item3" android:orderInCategory="2" android:title="Hilfe"></item>
+    <item android:id="@+id/item4" android:orderInCategory="3" android:title="Einstellungen">
+        <menu>
+            <item android:id="@+id/item8" android:title="Helligkeit"/>
+        </menu>
+    </item>
+    <item android:id="@+id/item5" android:title="Profil" android:orderInCategory="4">
     </item>
 </menu>

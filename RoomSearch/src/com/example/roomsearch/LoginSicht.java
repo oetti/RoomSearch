@@ -1,7 +1,10 @@
 package com.example.roomsearch;
 
-import Datenbank.SecurityService;
+import Datenbank.ActivityRegistry;
+import Datenbank.Nutzer;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,7 +29,7 @@ public class LoginSicht extends Activity implements OnClickListener, OnMenuItemC
 	private Button senden;
 	private Button gast;
 	// Die Klasse überprüft den Accountnamen und das dazu gehörige Passwort
-	private SecurityService ss = new SecurityService();
+	private Nutzer ss = new Nutzer();
 	
 	/**
 	 * Ansicht setzen
@@ -35,6 +38,7 @@ public class LoginSicht extends Activity implements OnClickListener, OnMenuItemC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_sicht);
+        ActivityRegistry.register(this);
         
         // Sende-Button
         senden = (Button) findViewById(R.id.eingabe_button);
@@ -92,14 +96,30 @@ public class LoginSicht extends Activity implements OnClickListener, OnMenuItemC
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_room_search, menu);
-        menu.add("deutsch"); 
-        menu.add("english");
-        MenuItem lang = menu.getItem(1);
-        lang.setOnMenuItemClickListener(this);
+        menu.getItem(3).setVisible(false);
+        for(int i = 0; i < menu.size(); i++) {
+        	menu.getItem(i).setOnMenuItemClickListener(this);
+        }
+        
         return true;
     }
 
 	public boolean onMenuItemClick(MenuItem item) {
+		if(item.getTitle().equals("Beenden")){
+			AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
+			 myAlertDialog.setTitle("Beenden");
+			 myAlertDialog.setMessage("Willst du Room Search wirklich beenden?");
+			 myAlertDialog.setPositiveButton("ja", new DialogInterface.OnClickListener() {
+			 public void onClick(DialogInterface arg0, int arg1) {
+				 ActivityRegistry.finishAll();
+			 }});
+			 myAlertDialog.setNegativeButton("nein", new DialogInterface.OnClickListener() {
+			 public void onClick(DialogInterface arg0, int arg1) {
+				  // tue nicht
+			 }});
+			 
+			 myAlertDialog.show();
+		}
 		return false;
 	}
 	

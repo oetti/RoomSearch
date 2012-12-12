@@ -9,6 +9,7 @@ public class Listfiller {
 	private ArrayList<String> don = new ArrayList<String>();
 	private ArrayList<String> fr = new ArrayList<String>();
 	private ArrayList<String> haus = new ArrayList<String>();
+	private ArrayList<String> zeiten = new ArrayList<String>();
 	
 	public Listfiller() {
 		fuellen();
@@ -20,7 +21,9 @@ public class Listfiller {
 		mo.add("B 542 Mobiles Web");
 		mo.add("B 343 Computergrafik II Übg.");
 		
+		di.add("");
 		di.add("D 114 Algorithmen Übg.");
+		di.add("B 323 Algorithmen");
 		di.add("B 323 Algorithmen");
 		di.add("B 507 Grundlagen wissen. Arbeitens");
 		
@@ -31,6 +34,14 @@ public class Listfiller {
 		
 		fr.add("D E16a L Software-Engineering II Übg.");
 		fr.add("D 209 Software-Engineering II");
+		
+		zeiten.add(" 8:00 - 9:30");
+		zeiten.add("10:00 - 11:30");
+		zeiten.add("12:15 - 13:45");
+		zeiten.add("14:15 - 15:45");
+		zeiten.add("16:00 - 17:30");
+		zeiten.add("17:45 - 19:15");
+		zeiten.add("19:30 - 21:00");
 		
 		// Gebäude
 		haus.add("Beuth (A)");
@@ -61,5 +72,9 @@ public class Listfiller {
 	
 	public ArrayList<String> haus() {
 		return this.haus;
+	}
+	
+	public ArrayList<String> zeit() {
+		return this.zeiten;
 	}
 }
