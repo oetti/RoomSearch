@@ -241,7 +241,7 @@ public class WifiReceiver extends BroadcastReceiver{
 	public void updateData(float position) {
 	    double grad = (position-360)+(360+gradUG);
 		//System.out.println("Postion: " + position);
-	    System.out.println("Errechneter Grad: " + gradUG +"° - Endgrad: " + grad + "°");
+	    //System.out.println("Errechneter Grad: " + gradUG +"° - Endgrad: " + grad + "°");
 	    
 	   // je nach Gradzahl wird ein anderer Pfeil als image gesetzt
 	  		if(grad > 0 && grad < 10) {((CamNavSicht) act).pfeil.setBackgroundResource(R.drawable.pfeil_0);}

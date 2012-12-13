@@ -20,18 +20,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ZoomControls;
 //import android.widget.RelativeLayout;
 import android.widget.SlidingDrawer;
 import android.widget.SlidingDrawer.OnDrawerCloseListener;
 import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ZoomButton;
 
 /**
  * Kameraansicht
@@ -42,7 +46,7 @@ import android.widget.Toast;
  * @author Andreas Oettinger
  * 
  */
-public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnClickListener, OnDrawerCloseListener, OnDrawerOpenListener, OnMenuItemClickListener {
+public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnClickListener, OnDrawerCloseListener, OnDrawerOpenListener, OnMenuItemClickListener, OnTouchListener {
 	// Vorlesungsraum und welche Vorlesung
 	private String vorlesung;
 	// Kamera Zugriff auf die Hardware des Handys auf Androidbasis 
@@ -71,6 +75,10 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 	private Sensor sensor;
 	// zeigt den Abstand zwischen Person und Zielraum (in Meter)
 	public TextView abstandView;
+	private ZoomControls zoom;
+	private ZoomButton min;
+	private ZoomButton max;
+	private View view;
 	
 	/**
 	 * In dieser Klasse wird die Ansicht erstellt.
@@ -92,7 +100,7 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
         
         /*
          * Wifi Manager (Zugriff auf WLan und GPS)
-        */ 
+        */
         // Den Service setzen der Activity
         wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         // der WifiManager wird freigeschaltet
@@ -160,10 +168,14 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
         slider.setOnDrawerOpenListener(this);
                
         // SlideDrawer für Raumplan
-        View view = findViewById(R.id.view1);
+        view = findViewById(R.id.view1);
         // Stimmt die Nummer überein setze den Raumplan in den SlideDrawer
         if(nummer.equals("341")) {
         	 view.setBackgroundResource(R.drawable.ic2_stundenplan);
+        	 zoom = (ZoomControls) findViewById(R.id.zoom);
+        	 System.out.println(zoom.getChildAt(0).toString());
+        	 min = (ZoomButton) zoom.getChildAt(0);
+        	 min.setOnClickListener(this);
         }
                 
         /*
@@ -304,22 +316,16 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 	}
 
 	public void onClick(View arg0) {
-		SlidingDrawer slider = (SlidingDrawer) findViewById(R.id.slidingDrawer1);
-		slider.animateOpen();
+		if(arg0 == raumnummer) {
+			SlidingDrawer slider = (SlidingDrawer) findViewById(R.id.slidingDrawer1);
+			slider.animateOpen();
+		}
+		
+		if(arg0 == min) {
+			view.setScaleX(1.5f);
+			view.setScaleY(1.5f);
+		}
 	}
-/*	
-	class MySurfaceView extends SurfaceView implements Runnable{
-
-		public MySurfaceView(Context context) {
-			super(context);
-			// TODO Automatisch generierter Konstruktorstub
-		}
-
-		public void run() {
-			// TODO Automatisch generierter Methodenstub
-			
-		}
-	}*/
 
 	public void onDrawerClosed() {
 		pfeil.setVisibility(1);
@@ -327,5 +333,20 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 
 	public void onDrawerOpened() {
 		pfeil.setVisibility(TRIM_MEMORY_BACKGROUND);
+	}
+
+	public boolean onTouch(View v, MotionEvent event) {
+		if(event.getAction() == MotionEvent.ACTION_POINTER_DOWN) {
+			v.setScaleX(1f);
+			v.setScaleY(1f);
+			System.out.println("down");
+		}
+		
+		if(event.getAction() == MotionEvent.ACTION_POINTER_UP) {
+			v.setScaleX(1f);
+			v.setScaleY(1f);
+			System.out.println("up");
+		}
+		return false;
 	}
 }

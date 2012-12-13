@@ -6,16 +6,23 @@ import Datenbank.Datenbank;
 import Datenbank.Listfiller;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -25,9 +32,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class NavSicht extends Activity implements OnClickListener, OnMenuItemClickListener, OnItemLongClickListener, OnItemClickListener {
+public class NavSicht extends Activity implements OnClickListener, OnMenuItemClickListener, OnItemLongClickListener, OnItemClickListener, OnTouchListener {
 	private Listfiller filler = new Listfiller();
 	private Button finden;
+	private Animation animAlpha;
 	// Liste von Vorlesungen
 	private ListView mo, di, mi, don, fr; 
 	private View selectedItem = null;
@@ -47,9 +55,11 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nav_sicht);
         ActivityRegistry.register(this);
+        
+        animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
         /*
          *  Wlan Location
-         
+        */ 
         wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         wifiWasEnabled = wifi.isWifiEnabled();
         wr = new WifiReceiver(this);
@@ -58,7 +68,7 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
         registerReceiver(wr,i);
         networkID = wifi.getConnectionInfo().getNetworkId();
         wifi.startScan();
-        */
+        
         /*
          * Stundenlan
          */
@@ -108,6 +118,7 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
         // Button Raum finden
         finden = (Button) findViewById(R.id.button_finden);
         finden.setOnClickListener(this);
+        //finden.setOnTouchListener(this);
 	}
 	
 	/**
@@ -155,14 +166,18 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
 		toast.show(); 
 	}
 
-	public void onClick(View v) {
-		if (v == finden) {
+	public void onClick(final View v) {
+		v.startAnimation(animAlpha);
+		Handler handler=new Handler();
+      	Runnable r = new Runnable() {
+      	public void run() {
+        if (v == finden) {
 			// von NavSicht zu CamNavSicht
 			final Intent in = new Intent (NavSicht.this, CamNavSicht.class);
 			
 			try {
 				if(selectedItemString.length() == 0) {
-					Toast toast = Toast.makeText(this, "Bitte im Stundenplan eine Vorlesung auswählen!", Toast.LENGTH_SHORT);
+					Toast toast = Toast.makeText(v.getContext(), "Bitte im Stundenplan eine Vorlesung auswählen!", Toast.LENGTH_SHORT);
 					toast.show(); 
 				} else {
 					dt = new Datenbank(selectedItemString);
@@ -170,10 +185,13 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
 					startActivity(in);
 				}
 			} catch (NullPointerException e) {
-				Toast toast = Toast.makeText(this, "Bitte im Stundenplan eine Vorlesung auswählen!", Toast.LENGTH_SHORT);
+				Toast toast = Toast.makeText(v.getContext(), "Bitte im Stundenplan eine Vorlesung auswählen!", Toast.LENGTH_SHORT);
 				toast.show(); 
 			}	
 		}
+      	  }
+      			}; 
+      			handler.postDelayed(r, 20);
 	}
 	
 	@Override
@@ -355,5 +373,26 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
 				}
 			}
 		}
+	}
+
+	public boolean onTouch(View arg0, MotionEvent arg1) {
+		if(arg1.getAction() == MotionEvent.ACTION_MOVE) {
+			final Intent in = new Intent (NavSicht.this, CamNavSicht.class);
+			
+			try {
+				if(selectedItemString.length() == 0) {
+					Toast toast = Toast.makeText(this, "Bitte im Stundenplan eine Vorlesung auswählen!", Toast.LENGTH_SHORT);
+					toast.show(); 
+				} else {
+					dt = new Datenbank(selectedItemString);
+					in.putExtra("Vorlesung", dt.getVorlesung());
+					startActivity(in);
+				}
+			} catch (NullPointerException e) {
+				Toast toast = Toast.makeText(this, "Bitte im Stundenplan eine Vorlesung auswählen!", Toast.LENGTH_SHORT);
+				toast.show(); 
+			}
+		}
+		return false;
 	}
 }

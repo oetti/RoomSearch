@@ -5,21 +5,41 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical" >
-
+
     <TextView
         android:id="@+id/TextView02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dip"
+        android:layout_marginTop="10dip"
+        android:gravity="center"
+        android:text="@string/stundenplan"
+        android:background="#9dd7d8"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="5dip"
-        android:layout_marginTop="5dip"
-        android:text="@string/stundenplan"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
+        android:text="@string/nav_anweisung1"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dip"
+        android:text="@string/nav_anweisung2"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView1"
         android:layout_width="290dp"
-        android:layout_height="155dp"
+        android:layout_height="170dp"
         android:layout_gravity="center" >
 
         <LinearLayout
@@ -34,16 +54,40 @@
                 android:layout_marginRight="5dip"
                 android:gravity="center"
                 android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/TextView05"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#00979a"
-                    android:gravity="center"
-                    android:text="@string/mon"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#ffffff" />
+                    android:layout_marginBottom="5dip" >
+
+                    <TextView
+                        android:id="@+id/TextView05"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:background="#00979a"
+                        android:textColor="#ffffff"
+                        android:gravity="center"
+                        android:text="@string/mon"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                         />
+
+                    <ImageView
+                        android:id="@+id/imageView1"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dip"
+                        android:src="@drawable/list_up" />
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dip"
+                        android:src="@drawable/list_down" />
+
+                </LinearLayout>
 
                 <ScrollView
                     android:id="@+id/ScrollView04"
@@ -74,17 +118,36 @@
                 android:layout_marginRight="5dip"
                 android:gravity="center"
                 android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/TextView06"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="#00979a"
-                    android:gravity="center"
-                    android:text="@string/die"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#ffffff" />
+                    android:layout_marginBottom="5dip" >
+
+                    <TextView
+                        android:id="@+id/TextView06"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:background="#00979a"
+                        android:gravity="center"
+                        android:text="@string/die"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#ffffff" />
+
+                    <ImageView
+                        android:id="@+id/ImageView01"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dip"
+                        android:src="@drawable/list_up" />
+
+                    <ImageView
+                        android:id="@+id/ImageView02"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dip"
+                        android:src="@drawable/list_down" />
+                </LinearLayout>
 
                 <ScrollView
                     android:id="@+id/ScrollView05"
@@ -115,17 +178,36 @@
                 android:layout_marginRight="5dip"
                 android:gravity="center"
                 android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/TextView04"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="#00979a"
-                    android:gravity="center"
-                    android:text="@string/mit"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#ffffff" />
+                    android:layout_marginBottom="5dip" >
+
+                    <TextView
+                        android:id="@+id/TextView04"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:background="#00979a"
+                        android:gravity="center"
+                        android:text="@string/mit"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#ffffff" />
+
+                    <ImageView
+                        android:id="@+id/ImageView03"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dip"
+                        android:src="@drawable/list_up" />
+
+                    <ImageView
+                        android:id="@+id/ImageView04"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dip"
+                        android:src="@drawable/list_down" />
+                </LinearLayout>
 
                 <ScrollView
                     android:id="@+id/ScrollView03"
@@ -156,17 +238,36 @@
                 android:layout_marginRight="5dip"
                 android:gravity="center"
                 android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/TextView03"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="#00979a"
-                    android:gravity="center"
-                    android:text="@string/don"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#ffffff" />
+                    android:layout_marginBottom="5dip" >
+
+                    <TextView
+                        android:id="@+id/TextView03"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:background="#00979a"
+                        android:gravity="center"
+                        android:text="@string/don"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#ffffff" />
+
+                    <ImageView
+                        android:id="@+id/ImageView05"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dip"
+                        android:src="@drawable/list_up" />
+
+                    <ImageView
+                        android:id="@+id/ImageView06"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dip"
+                        android:src="@drawable/list_down" />
+                </LinearLayout>
 
                 <ScrollView
                     android:id="@+id/ScrollView02"
@@ -197,17 +298,36 @@
                 android:layout_marginRight="5dip"
                 android:gravity="center"
                 android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/TextView01"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="#00979a"
-                    android:gravity="center"
-                    android:text="@string/fre"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#ffffff" />
+                    android:layout_marginBottom="5dip" >
+
+                    <TextView
+                        android:id="@+id/TextView01"
+                        android:layout_width="240dp"
+                        android:layout_height="wrap_content"
+                        android:background="#00979a"
+                        android:gravity="center"
+                        android:text="@string/fre"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#ffffff" />
+
+                    <ImageView
+                        android:id="@+id/ImageView07"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dip"
+                        android:src="@drawable/list_up" />
+
+                    <ImageView
+                        android:id="@+id/ImageView08"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dip"
+                        android:src="@drawable/list_down" />
+                </LinearLayout>
 
                 <ScrollView
                     android:id="@+id/ScrollView01"
@@ -233,49 +353,37 @@
         </LinearLayout>
 
     </HorizontalScrollView>
-
+
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="5dip"
-        android:layout_marginTop="5dip"
+        android:layout_marginBottom="20dip"
+        android:layout_marginTop="20dip"
+        android:background="#9dd7d8"
+        android:gravity="center"
         android:text="@string/standort"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="290dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dip"
+        android:background="#F2F2F2"
+        android:gravity="center"
+        android:text="@string/test" />
+
+    <Button
+        android:id="@+id/button_finden"
         android:layout_width="290dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_weight="0.63"
-        android:gravity="center"
-        android:orientation="vertical" >
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.80" >
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="194dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="5dip"
-                android:background="#F2F2F2"
-                android:gravity="center"
-                android:text="@string/test" />
-
-        </FrameLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/button_finden"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_marginBottom="20dip"
         android:layout_marginTop="10dip"
-        android:text="@string/finden" />
+        android:background="@drawable/raum_finden_button"
+        />
 
 </LinearLayout>

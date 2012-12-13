@@ -78,12 +78,30 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical" >
-
-            <View
-                android:id="@+id/view1"
+
+            <ZoomControls
+                android:id="@+id/zoom"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/spinner_background" />
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <FrameLayout
+                    android:layout_width="700dp"
+                    android:layout_height="500dp"
+                    android:layout_gravity="center" >
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="320dp"
+                        android:layout_height="213dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/spinner_background" />
+                </FrameLayout>
+
+            </FrameLayout>
 
         </LinearLayout>
 

@@ -3,24 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+
     <TextView
         android:id="@+id/welcome_login"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dip"
+        android:gravity="center"
         android:text="@string/einleitung_login"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="25dip" />
-
+        android:textSize="25dip" 
+        android:background="#00979a"
+        android:textColor="#ffffff"
+        />
+
     <TextView
         android:id="@+id/info_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="5dip"
-        android:layout_marginTop="5dip"
+        android:layout_marginTop="20dip"
         android:text="@string/info_login"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textSize="15dip" />
@@ -43,6 +47,7 @@
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="15dip"
                 android:text="@string/hrz_text"
+                android:background="#9dd7d8"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="20dip" />
 
@@ -73,6 +78,7 @@
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="15dip"
                 android:text="@string/passwort"
+                android:background="#9dd7d8"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="20dip" />
 
@@ -90,28 +96,32 @@
         </LinearLayout>
 
     </LinearLayout>
-
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginLeft="5dip"
         android:layout_marginRight="5dip"
         android:layout_marginTop="30dip"
         android:gravity="center" >
-
+
         <Button
             android:id="@+id/eingabe_button"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="@string/eingabe_button" />
-
+            android:layout_height="80dp"
+            android:layout_marginRight="10dip"
+            android:background="@drawable/senden_button" />
+
         <Button
             android:id="@+id/gast_button"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="@string/gast" />
+            android:layout_height="80dp"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/button_gast" />
+
     </LinearLayout>
 
 </LinearLayout>

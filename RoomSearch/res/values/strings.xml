@@ -6,7 +6,7 @@
     <string name="title_activity_room_search">Room Search</string>
     <string name="weiter">Weiter</string>
     <string name="stundenplan">Stundenplan</string>
-    <string name="standort">Standort</string>
+    <string name="standort">Dein Standort</string>
     <string name="mon">Montag</string>
     <string name="aktiv">nicht ausgewählt</string>
     <string name="die">Dienstag</string>
@@ -36,5 +36,7 @@
     <string name="_placeholder">-</string>
     <string name="einstellung">Einstellungen</string>
     <string name="qr_code">QR-Code</string>
+    <string name="nav_anweisung1">Vorlesung auswählen - kurz drücken</string>
+    <string name="nav_anweisung2">Vorlesung Informationen - lange drücken</string>
 
 </resources>
