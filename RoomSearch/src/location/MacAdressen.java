@@ -157,15 +157,12 @@ public class MacAdressen {
 		
 		switch(nummer) {
 		// 2.Etage
-		// noch nicht eindeutig
-		case 207 : r[0] = 3; r[1]= 15; r[2]= 12.10; break;
+		case 207 : r[0] = 3; r[1]= 12; r[2]= 12.10; break;
 		case 215 : r[0] = 1; r[1]= 41; r[2]= 12.10; break;
 		case 220 : r[0] = 12; r[1]= 63; r[2]= 12.10; break;
 		case 250 : r[0] = 13; r[1]= 141; r[2]= 12.10; break;
-		// noch nicht eindeutig
-		case 218 : r[0] = 13; r[1]= 51; r[2]= 12.10; break;
-		// noch nicht eindeutig
-		case 208 : r[0] = 14; r[1]= 21; r[2]= 12.10; break;
+		case 218 : r[0] = 11; r[1]= 48; r[2]= 12.10; break;
+		case 208 : r[0] = 12; r[1]= 20; r[2]= 12.10; break;
 		case 223 : r[0] = 5; r[1]= 83; r[2]= 12.10; break;
 		case 253 : r[0] = 3; r[1]= 136; r[2]= 12.10; break;
 		case 230 : r[0] = 14; r[1]= 93; r[2]= 12.10; break;
@@ -176,14 +173,11 @@ public class MacAdressen {
 		case 243 : r[0] = 2; r[1]= 117; r[2]= 12.10; break;
 		case 242 : r[0] = 13; r[1]= 119.5; r[2]= 12.10; break;
 		case 234 : r[0] = 14; r[1]= 102; r[2]= 12.10; break;
-		// noch nicht eindeutig
-		case 201 : r[0] = 9; r[1]= 3; r[2]= 12.10; break;
+		case 201 : r[0] = 6; r[1]= 2; r[2]= 12.10; break;
 		case 257 : r[0] = 5.5; r[1]= 147; r[2]= 12.10; break;
 		case 213 : r[0] = 2.5; r[1]= 29; r[2]= 12.10; break;
-		// noch nicht eindeutig
-		case 202 : r[0] = 14; r[1]= 7; r[2]= 12.10; break;
-		// noch nicht eindeutig
-		case 225 : r[0] = 5; r[1]= 83; r[2]= 12.10; break;
+		case 202 : r[0] = 14; r[1]= 8; r[2]= 12.10; break;
+		case 225 : r[0] = 5; r[1]= 97; r[2]= 12.10; break;
 		
 		// 3.Etage
 		case 301 : r[0] = 6; r[1]= 10; r[2]= 16.5; break;
@@ -209,15 +203,11 @@ public class MacAdressen {
 		// noch nicht eindeutig
 		case 421 : r[0] = 3; r[1]= 69; r[2]= 20.9; break;
 		// noch nicht eindeutig
-		case 445 : r[0] = 3; r[1]= 143; r[2]= 20.9; break;
-		// noch nicht eindeutig
-		case 452 : r[0] = 14; r[1]= 143; r[2]= 20.9; break;
-		// noch nicht eindeutig
-		case 425 : r[0] = 5; r[1]= 104; r[2]= 20.9; break;
-		// noch nicht eindeutig
-		case 451 : r[0] = 2; r[1]= 152; r[2]= 20.9; break;
-		// noch nicht eindeutig
-		case 420 : r[0] = 14; r[1]= 64; r[2]= 20.9; break;
+		case 445 : r[0] = 3; r[1]= 141; r[2]= 20.9; break;
+		case 452 : r[0] = 15; r[1]= 141; r[2]= 20.9; break;
+		case 425 : r[0] = 4; r[1]= 99; r[2]= 20.9; break;
+		case 451 : r[0] = 3; r[1]= 154; r[2]= 20.9; break;
+		case 420 : r[0] = 14; r[1]= 69; r[2]= 20.9; break;
 		case 441 : r[0] = 3; r[1]= 120; r[2]= 20.9; break;
 		case 423 : r[0] = 3; r[1]= 86; r[2]= 20.9; break;
 		case 432 : r[0] = 14; r[1]= 94; r[2]= 20.9; break;

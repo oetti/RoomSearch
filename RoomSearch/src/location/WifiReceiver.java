@@ -76,7 +76,7 @@ public class WifiReceiver extends BroadcastReceiver{
 	    wifi.startScan();
 	    @SuppressWarnings("rawtypes")
 		List db = wifi.getScanResults();
-	    /*
+	    
 	    // Iteriere über diese Liste
 	    @SuppressWarnings("rawtypes")
 		Iterator it = db.iterator();
@@ -115,7 +115,7 @@ public class WifiReceiver extends BroadcastReceiver{
 	    double[] wlan3 = {w3[0], w3[1], w3[2], sortList.get(2).level};
 	    double[] wlan4 = {w4[0], w4[1], w4[2], sortList.get(2).level};
 	    
-	    /* existiert kein dritter Accesspoint, generiere einen 
+	    // existiert kein dritter Accesspoint, generiere einen 
 	    if(sortList.size() > 2) {
 	    	wlan3[0] = w3[0];
 	    	wlan3[1] = w3[1];
@@ -147,11 +147,11 @@ public class WifiReceiver extends BroadcastReceiver{
 	    	// Kontrolle stimmt noch nicht alles siehe gene. punkt 4 die formel
 	    	wlan3[3] = ((sortList.get(0).level + sortList.get(1).level));
 	    	erzeugterPunkt = true;
-	    }*/
-	    /*
-	    System.out.println("w1: " + wlan1[0] + " w2: " + wlan1[1] + " w3: " + wlan1[2]);
-	    System.out.println("w1: " + wlan2[0] + " w2: " + wlan2[1] + " w3: " + wlan2[2]);
-	    System.out.println("w1: " + wlan3[0] + " w2: " + wlan3[1] + " w3: " + wlan3[2]);
+	    }
+	    
+	    //System.out.println("w1: " + wlan1[0] + " w2: " + wlan1[1] + " w3: " + wlan1[2]);
+	    //System.out.println("w1: " + wlan2[0] + " w2: " + wlan2[1] + " w3: " + wlan2[2]);
+	    //System.out.println("w1: " + wlan3[0] + " w2: " + wlan3[1] + " w3: " + wlan3[2]);
 	    
 	   ArrayList<double[]> wLanPoints = new ArrayList<double[]>();
 	   wLanPoints.add(wlan1);
@@ -165,11 +165,11 @@ public class WifiReceiver extends BroadcastReceiver{
 	   //double[] location = t.rechnen(wLanPoints);
 	   
 	   // 3d Lokalisation
-	   //Multi multi = new Multi(this);
-	   //double[] location = multi.rechnen(wLanPoints, wLanPoints.size());
-	   */
+	   Multi multi = new Multi(this);
+	   double[] location = multi.rechnen(wLanPoints, wLanPoints.size());
+	   
 	   // fester Standort generiert
-	   double[] location = {9, 111};
+	   //double[] location = {9, 111};
 	   
 	   // sind der x und y wert Not a Number oder Infinity gib gespeicherte Position wieder
 	   if((Double.isNaN(location[0]) || Double.isInfinite(location[0])) || (Double.isNaN(location[1]) || Double.isInfinite(location[1]))) {
@@ -189,20 +189,14 @@ public class WifiReceiver extends BroadcastReceiver{
 	   
 	   // Klasse Position für Besonderheiten bestimmter Bereiche z.B. (TH1 z.B.)
 	   Positionen p = new Positionen();
-	 /*
+	 
 	   // ist die Activity die NavSicht dann mache das...
 	   if (act instanceof NavSicht) {
 		   //System.out.println("NavSicht Standort wird ermittelt");
 			String position = //"Gebäude: Haus Beuth\n\n" +
 								"Etage: " + p.getEtage(location[2]) + "\n\n" +
 								"Gebiet: " + p.getPosition(location[0], location[1]) +
-								"\n\nMeine Position: = " + Math.ceil(location[0]) + " y = " + Math.ceil(location[1]) +
-								"\nWlan1 Raum: " + m.getRaum(sortList.get(0).BSSID) + " Abstand: ca. " + Math.round(((sortList.get(0).level + 32.0) / -4.5)) + "m | Signal: " + 
-								sortList.get(0).level +
-								"\nWlan2 Raum: " + m.getRaum(sortList.get(1).BSSID) + " Abstand: ca. " + Math.round(((sortList.get(1).level + 32.0) / -4.5)) + "m | Signal: " +
-								sortList.get(1).level +
-								"\nWlan3: Raum = " + m.getRaum(sortList.get(2).BSSID) + " Abstand: ca. " + Math.round(((sortList.get(2).level + 32.0) / -4.5)) + "m | Erzeugt: " + sortList.get(2).level +
-								"\nWlan3: Raum = " + m.getRaum(sortList.get(3).BSSID) + " Abstand: ca. " + Math.round(((sortList.get(3).level + 32.0) / -4.5)) + "m | Erzeugt: " + sortList.get(3).level;
+								"\n\nMeine Position: = " + Math.round(location[0]) + " y = " + Math.round(location[1]);
 		
 			((NavSicht) act).standort.setText(position);
 	   }
@@ -239,10 +233,10 @@ public class WifiReceiver extends BroadcastReceiver{
 	}
 	
 	public void updateData(float position) {
-	    double grad = (position-360)+(360+gradUG);
+	    double grad = (position-(155 + gradUG));
 		//System.out.println("Postion: " + position);
 	    //System.out.println("Errechneter Grad: " + gradUG +"° - Endgrad: " + grad + "°");
-	    
+	    ((CamNavSicht) act).abstandView.setText(grad+"°");
 	   // je nach Gradzahl wird ein anderer Pfeil als image gesetzt
 	  		if(grad > 0 && grad < 10) {((CamNavSicht) act).pfeil.setBackgroundResource(R.drawable.pfeil_0);}
 	  		if(grad > 10 && grad < 20) {((CamNavSicht) act).pfeil.setBackgroundResource(R.drawable.pfeil_10);}

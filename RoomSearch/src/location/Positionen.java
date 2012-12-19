@@ -6,7 +6,7 @@ public class Positionen {
 	public String getPosition(double x, double y) {
 		String position = "nicht im Messbereich";
 		// Flur
-		if(x > 5 && x < 12 && y > 12 && y < 148) {
+		if(x > 5.9 && x < 11.1 && y > 11.9 && y < 147.1) {
 			position = "Flur";
 		}
 		// TH1
