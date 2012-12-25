@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back_ground"
     android:orientation="vertical" >
-
+    
+
     <TextView
         android:id="@+id/welcome_login"
         android:layout_width="match_parent"
@@ -11,10 +13,10 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dip"
         android:background="#00979a"
-        android:textColor="#ffffff"
         android:gravity="center"
         android:text="@string/einleitung_login"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/info_login"
@@ -23,6 +25,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="40dip"
         android:text="@string/info_login"
+        android:textColor="#ffffff"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -35,7 +38,7 @@
         android:text="@string/hrz_text"
         android:background="#9dd7d8"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <EditText
         android:id="@+id/matText"
         android:layout_width="match_parent"
@@ -43,8 +46,10 @@
         android:layout_marginLeft="5dip"
         android:layout_marginRight="5dip"
         android:ems="10"
-        android:inputType="text"
-        android:singleLine="true" >
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
+        android:background="#ffffff"
+        android:textSize="25dp" >
 
         <requestFocus />
     </EditText>
@@ -59,7 +64,7 @@
         android:text="@string/passwort"
        android:background="#9dd7d8"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <EditText
         android:id="@+id/pwText"
         android:layout_width="match_parent"
@@ -67,7 +72,9 @@
         android:layout_marginLeft="5dip"
         android:layout_marginRight="5dip"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:background="#ffffff"
+        android:textSize="25dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,20 +83,23 @@
         android:layout_marginRight="5dip"
         android:layout_marginTop="60dip"
         android:gravity="center" >
-
+
         <Button
             android:id="@+id/eingabe_button"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="150dp"
             android:layout_height="80dp"
-            android:background="@drawable/senden_button" />
-
+            android:background="#00979a"
+            android:text="@string/login" />
+
         <Button
             android:id="@+id/gast_button"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="150dp"
             android:layout_height="80dp"
-            android:background="@drawable/button_gast" />
+            android:layout_marginLeft="10dp"
+            android:background="#00979a"
+            android:text="@string/gast" />
 
     </LinearLayout>
 

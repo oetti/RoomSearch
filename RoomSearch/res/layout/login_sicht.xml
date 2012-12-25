@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@drawable/back_ground" >
 
     <TextView
         android:id="@+id/welcome_login"
@@ -105,22 +106,24 @@
         android:layout_marginRight="5dip"
         android:layout_marginTop="30dip"
         android:gravity="center" >
-
+
         <Button
             android:id="@+id/eingabe_button"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="150dp"
             android:layout_height="80dp"
             android:layout_marginRight="10dip"
-            android:background="@drawable/senden_button" />
-
+            android:background="#00979a"
+            android:text="@string/login" />
+
         <Button
             android:id="@+id/gast_button"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="150dp"
             android:layout_height="80dp"
             android:layout_marginLeft="10dip"
-            android:background="@drawable/button_gast" />
+            android:background="#00979a"
+            android:text="@string/gast" />
 
     </LinearLayout>
 

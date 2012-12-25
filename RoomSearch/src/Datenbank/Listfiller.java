@@ -28,7 +28,7 @@ public class Listfiller {
 		di.add("B 507 Grundlagen wissen. Arbeitens");
 		
 		mi.add("D 114 Human Computer Interaction Übg.");
-		mi.add("B 325 Human Computer Interaction");
+		mi.add("B 342a Human Computer Interaction");
 		
 		don.add("B 341 Medienprojekt I");
 		

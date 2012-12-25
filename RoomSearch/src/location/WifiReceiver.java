@@ -71,7 +71,7 @@ public class WifiReceiver extends BroadcastReceiver{
 			//if (act instanceof GastNavSicht) {
 			//	wifi = act.getWifi();
 			//}
-	    
+	    /*
 		// Scanne nach Accesspoints und packe das Resultat und seine Daten in eine Liste
 	    wifi.startScan();
 	    @SuppressWarnings("rawtypes")
@@ -167,9 +167,9 @@ public class WifiReceiver extends BroadcastReceiver{
 	   // 3d Lokalisation
 	   Multi multi = new Multi(this);
 	   double[] location = multi.rechnen(wLanPoints, wLanPoints.size());
-	   
+	   */
 	   // fester Standort generiert
-	   //double[] location = {9, 111};
+	   double[] location = {11, 30};
 	   
 	   // sind der x und y wert Not a Number oder Infinity gib gespeicherte Position wieder
 	   if((Double.isNaN(location[0]) || Double.isInfinite(location[0])) || (Double.isNaN(location[1]) || Double.isInfinite(location[1]))) {
@@ -224,7 +224,7 @@ public class WifiReceiver extends BroadcastReceiver{
 	 		gradUG = Math.toDegrees(Math.acos(cosa));
 			}
 		} catch (RuntimeException e) {
-				((NavSicht) act).keinNetz(e.toString());	
+				//((NavSicht) act).keinNetz(e.toString());	
 			}
 	}
 	

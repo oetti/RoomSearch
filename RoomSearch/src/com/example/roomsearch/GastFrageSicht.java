@@ -1,7 +1,7 @@
 package com.example.roomsearch;
 
 import Datenbank.ActivityRegistry;
-import Datenbank.Hausverwaltung;
+import Datenbank.Datenbank;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -26,7 +26,8 @@ import android.widget.Toast;
 public class GastFrageSicht extends Activity implements OnClickListener, OnMenuItemClickListener {
 	private Button suchen;
 	// In dieser Klasser wird die eingebene Raumnummer überprüft.
-	private Hausverwaltung h = new Hausverwaltung();
+	private Datenbank datenbank = new Datenbank();
+	private String haus;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,14 +36,15 @@ public class GastFrageSicht extends Activity implements OnClickListener, OnMenuI
         Intent intent = getIntent();
         // uebergibt Daten weiter uebermittelte Daten der vorigen Activity
         // von Gast_Nav_Sicht
-        String haus ="Du hast das Haus " + intent.getExtras().getString("Haus") + " ausgewählt.";
+        haus = intent.getExtras().getString("Haus");
+        String hausAntwort ="Du hast das Haus " + haus + " ausgewählt.";
         // setzt die View als aktuelle anzusehende View
         setContentView(R.layout.gast_frage_sicht);
         ActivityRegistry.register(this);
         // Überschrift welches Haus ausgewählt wurde
         TextView hausname = (TextView) findViewById(R.id.text_info_haus);
         // Gebäudename z.B. Gauss
-        hausname.setText(haus);
+        hausname.setText(hausAntwort);
         
         // Suche-Button
         suchen = (Button) findViewById(R.id.suchen_button);
@@ -94,7 +96,7 @@ public class GastFrageSicht extends Activity implements OnClickListener, OnMenuI
 		try {
 			// kontrolliere ob die Nummer auch stimmt, wenn ja gib sie weiter an
 			// die nächste Activity und starte sie
-			if(h.beuthCheck(text.getText().toString())) {
+			if(datenbank.checkHaus(text.getText().toString(), haus)) {
 				in.putExtra("Nummer", text.getText().toString());
 				startActivity(in);
 			} else {

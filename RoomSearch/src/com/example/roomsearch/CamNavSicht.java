@@ -1,7 +1,6 @@
 package com.example.roomsearch;
 
 import java.io.IOException;
-
 import location.WifiReceiver;
 import Datenbank.ActivityRegistry;
 import android.app.Activity;
@@ -10,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -20,22 +20,23 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuItem.OnMenuItemClickListener;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ZoomControls;
-//import android.widget.RelativeLayout;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.SlidingDrawer;
 import android.widget.SlidingDrawer.OnDrawerCloseListener;
 import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ZoomButton;
+import android.widget.ViewFlipper;
+import android.widget.ViewSwitcher;
 
 /**
  * Kameraansicht
@@ -46,7 +47,7 @@ import android.widget.ZoomButton;
  * @author Andreas Oettinger
  * 
  */
-public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnClickListener, OnDrawerCloseListener, OnDrawerOpenListener, OnMenuItemClickListener, OnTouchListener {
+public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnClickListener, OnDrawerCloseListener, OnDrawerOpenListener, OnMenuItemClickListener, OnItemClickListener {
 	// Vorlesungsraum und welche Vorlesung
 	private String vorlesung;
 	// Kamera Zugriff auf die Hardware des Handys auf Androidbasis 
@@ -56,7 +57,7 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 	private SurfaceHolder holder;
 	private boolean previewing = false;
 	// In diesem Button wird die Zielraumnummer angezeigt 
-	private Button raumnummer;
+	private Button raumnummer, flip_1_2, flip_2_1, flip_2_3, flip_3_2;
 	
 	private SlidingDrawer slider;
 	// dummy Raumposition
@@ -75,10 +76,11 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 	private Sensor sensor;
 	// zeigt den Abstand zwischen Person und Zielraum (in Meter)
 	public TextView abstandView;
-	private ZoomControls zoom;
-	private ZoomButton min;
-	private ZoomButton max;
-	private View view;
+	private ViewFlipper flip;
+	private ViewSwitcher switcher;
+	//private View view;
+	private TextView zielraum, raum;
+	private String nummer;
 	
 	/**
 	 * In dieser Klasse wird die Ansicht erstellt.
@@ -95,7 +97,8 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
         // von Gast_Frage_Sicht.java
         String raumnum = intent.getExtras().getString("Nummer");
         // setzt die View als aktuelle anzusehende View
-        setContentView(R.layout.cam_nav_sicht);
+        //setContentView(R.layout.cam_nav_sicht);
+        setContentView(R.layout.cam_sicht);
         ActivityRegistry.register(this);
         
         /*
@@ -134,9 +137,10 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
         }
         
         // reine Raumnummer setzen z.B. "341"
-        String nummer = "";
+        nummer = "";
         // In dieser View wird der Raum + die Vorlesung dann gesetzt
-        TextView raum = (TextView) findViewById(R.id.textView_raum);
+        raum = (TextView) findViewById(R.id.textView_raum);
+        raum.setOnClickListener(this);
         
         // dieser Button zeigt an welcher Raum ausgewählt wurde
         raumnummer = (Button) findViewById(R.id.button_raum);
@@ -167,16 +171,15 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
         slider.setOnDrawerCloseListener(this);
         slider.setOnDrawerOpenListener(this);
                
-        // SlideDrawer für Raumplan
-        view = findViewById(R.id.view1);
-        // Stimmt die Nummer überein setze den Raumplan in den SlideDrawer
-        if(nummer.equals("341")) {
-        	 view.setBackgroundResource(R.drawable.ic2_stundenplan);
-        	 zoom = (ZoomControls) findViewById(R.id.zoom);
-        	 System.out.println(zoom.getChildAt(0).toString());
-        	 min = (ZoomButton) zoom.getChildAt(0);
-        	 min.setOnClickListener(this);
-        }
+        /*
+         *  SlideDrawer
+         */
+        ListView raumOptions = (ListView) findViewById(R.id.list_informations);
+        String[] options = {"Rauminformationen", "Foto", "zur Website", "Raumplan"};
+        ArrayAdapter<String> optionsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, options); 
+        raumOptions.setBackgroundColor(Color.WHITE);
+        raumOptions.setAdapter(optionsAdapter);
+        raumOptions.setOnItemClickListener(this);
                 
         /*
          *  Kamera
@@ -195,6 +198,24 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
         /*
          *  Button erstellen
          */   
+        
+        /*
+         * FLip
+        */
+        flip_1_2 = (Button) findViewById(R.id.button_1_2);
+        flip_2_1 = (Button) findViewById(R.id.button_2_1);
+        flip_2_3 = (Button) findViewById(R.id.button_2_3);
+        flip_3_2 = (Button) findViewById(R.id.button_3_1);
+        
+        flip_1_2.setOnClickListener(this);
+        flip_2_1.setOnClickListener(this);
+        flip_2_3.setOnClickListener(this);
+        flip_3_2.setOnClickListener(this);
+        flip = (ViewFlipper) findViewById(R.id.viewFlipper1);
+        
+        zielraum = (TextView)findViewById(R.id.ziel_raum);
+        switcher = (ViewSwitcher) findViewById(R.id.viewSwitcher2);
+        zielraum.setOnClickListener(this);
 	}
 	
 	/**
@@ -321,10 +342,32 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 			slider.animateOpen();
 		}
 		
-		if(arg0 == min) {
-			view.setScaleX(1.5f);
-			view.setScaleY(1.5f);
+		if(arg0 == zielraum) {
+			switcher.setDisplayedChild(1);
 		}
+		
+		if(arg0 == raum) {
+			switcher.setDisplayedChild(0);
+		}
+		
+		if(arg0 == flip_1_2 || arg0 == flip_3_2) {
+			flip.setDisplayedChild(1);
+			
+		}
+		
+		if(arg0 == flip_2_1) {
+			flip.setDisplayedChild(0);
+		}
+		
+		if(arg0 == flip_2_3) {
+			flip.setDisplayedChild(2);
+			// Beispiel raumplan
+			ImageView bsp = (ImageView)findViewById(R.id.image_raumplan_scroll);
+			if(nummer.equals("341")) {
+				bsp.setBackgroundResource(R.drawable.ic2_stundenplan);
+			}
+		}
+		
 	}
 
 	public void onDrawerClosed() {
@@ -335,18 +378,29 @@ public class CamNavSicht extends Activity implements SurfaceHolder.Callback, OnC
 		pfeil.setVisibility(TRIM_MEMORY_BACKGROUND);
 	}
 
-	public boolean onTouch(View v, MotionEvent event) {
-		if(event.getAction() == MotionEvent.ACTION_POINTER_DOWN) {
-			v.setScaleX(1f);
-			v.setScaleY(1f);
-			System.out.println("down");
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		if(arg2 == 0) {
+			AlertDialog.Builder raumDialog = new AlertDialog.Builder(this);
+			 raumDialog.setTitle("Informationen zum Raum "+nummer);
+			 raumDialog.setMessage("Hier stehen alle Informationen zum Raum.");
+			 raumDialog.setNeutralButton("ok", new DialogInterface.OnClickListener() {
+				 public void onClick(DialogInterface arg0, int arg1) {
+				 }});
+				 raumDialog.show();
 		}
 		
-		if(event.getAction() == MotionEvent.ACTION_POINTER_UP) {
-			v.setScaleX(1f);
-			v.setScaleY(1f);
-			System.out.println("up");
+		if(arg2 == 1) {
+			AlertDialog.Builder raumDialog = new AlertDialog.Builder(this);
+			 raumDialog.setTitle(""+nummer);
+			 raumDialog.setIcon(R.drawable.raum_foto);
+			 raumDialog.setNeutralButton("ok", new DialogInterface.OnClickListener() {
+			 public void onClick(DialogInterface arg0, int arg1) {
+			 }});
+			 raumDialog.show();
 		}
-		return false;
+		
+		if(arg2 == 3) {
+			flip.setDisplayedChild(2);
+		}
 	}
 }

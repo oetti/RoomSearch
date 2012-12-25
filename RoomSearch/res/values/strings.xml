@@ -38,5 +38,13 @@
     <string name="qr_code">QR-Code</string>
     <string name="nav_anweisung1">Vorlesung auswählen - kurz drücken</string>
     <string name="nav_anweisung2">Vorlesung Informationen - lange drücken</string>
+    <string name="kam_sicht">Kamera Ansicht</string>
+    <string name="campus_position">Campus</string>
+    <string name="standort_campus">Standort Campus</string>
+    <string name="raum_informationen">Rauminfo</string>
+    <string name="kamera">Kamera</string>
+    <string name="abstand">Abstand</string>
+    <string name="raum_plan">Raumplan</string>
+    <string name="login">Login</string>
 
 </resources>

@@ -150,4 +150,29 @@
         android:layout_below="@+id/button_raum"
         android:background="@drawable/room_new" />
 
+    <Button
+        android:id="@+id/Button01"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_above="@+id/button1"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="14dp"
+        android:background="@drawable/room_new" />
+
+    <Button
+        android:id="@+id/Button03"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignTop="@+id/button_raum"
+        android:layout_toLeftOf="@+id/Button01"
+        android:background="@drawable/room_new" />
+
+    <Button
+        android:id="@+id/Button02"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/Button03"
+        android:layout_toRightOf="@+id/button1"
+        android:background="@drawable/room_new" />
+
 </RelativeLayout>

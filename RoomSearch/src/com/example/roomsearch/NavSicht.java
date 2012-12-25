@@ -1,9 +1,9 @@
 package com.example.roomsearch;
 
+import location.Positionen;
 import location.WifiReceiver;
 import Datenbank.ActivityRegistry;
 import Datenbank.Datenbank;
-import Datenbank.Listfiller;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -33,7 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class NavSicht extends Activity implements OnClickListener, OnMenuItemClickListener, OnItemLongClickListener, OnItemClickListener, OnTouchListener {
-	private Listfiller filler = new Listfiller();
+	private Datenbank datenbank = new Datenbank();
 	private Button finden;
 	private Animation animAlpha;
 	// Liste von Vorlesungen
@@ -56,6 +56,8 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
         setContentView(R.layout.nav_sicht);
         ActivityRegistry.register(this);
         
+        Positionen p = new Positionen();
+        p.getPosition(17, 30);
         animAlpha = AnimationUtils.loadAnimation(this, R.anim.anim_alpha);
         /*
          *  Wlan Location
@@ -75,35 +77,35 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
         // Vorlesungen Montag
         
         mo = (ListView) findViewById(R.id.ListMo); 
-        ArrayAdapter<String> sAmon = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, filler.montag()); 
+        ArrayAdapter<String> sAmon = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, datenbank.liste("mo")); 
         mo.setBackgroundColor(Color.WHITE);
         mo.setAdapter(sAmon);
         mo.setOnItemLongClickListener(this);
         mo.setOnItemClickListener(this);
         // Vorlesungen Dienstag
         di = (ListView) findViewById(R.id.ListDi);
-        ArrayAdapter<String> sAdie = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, filler.dienstag()); 
+        ArrayAdapter<String> sAdie = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, datenbank.liste("di")); 
         di.setBackgroundColor(Color.WHITE);
         di.setAdapter(sAdie);
         di.setOnItemLongClickListener(this);
         di.setOnItemClickListener(this);
         // Vorlesungen Mittwoch
         mi = (ListView) findViewById(R.id.ListMi);
-        ArrayAdapter<String> sAmit = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, filler.mittwoch()); 
+        ArrayAdapter<String> sAmit = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, datenbank.liste("mi")); 
         mi.setBackgroundColor(Color.WHITE);
         mi.setAdapter(sAmit);
         mi.setOnItemLongClickListener(this);
         mi.setOnItemClickListener(this);
         // Vorlesungen Donnerstag
         don = (ListView) findViewById(R.id.ListDo);
-        ArrayAdapter<String> sAdon = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, filler.donnerstag()); 
+        ArrayAdapter<String> sAdon = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, datenbank.liste("do")); 
         don.setBackgroundColor(Color.WHITE);
         don.setAdapter(sAdon);
         don.setOnItemLongClickListener(this);
         don.setOnItemClickListener(this);
         // Vorlesungen Freitag
         fr = (ListView) findViewById(R.id.ListFr);
-        ArrayAdapter<String> sAfre = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, filler.freitag()); 
+        ArrayAdapter<String> sAfre = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, datenbank.liste("fr")); 
         fr.setBackgroundColor(Color.WHITE);
         fr.setAdapter(sAfre);
         fr.setOnItemLongClickListener(this);
@@ -112,7 +114,7 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
 		/*
          * Standort
          */
-        standort = (TextView)findViewById(R.id.textView2);
+        standort = (TextView)findViewById(R.id.text_position_info);
         standort.setBackgroundColor(Color.WHITE);
         
         // Button Raum finden
@@ -180,7 +182,8 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
 					Toast toast = Toast.makeText(v.getContext(), "Bitte im Stundenplan eine Vorlesung auswählen!", Toast.LENGTH_SHORT);
 					toast.show(); 
 				} else {
-					dt = new Datenbank(selectedItemString);
+					dt = new Datenbank();
+					dt.setVorlesung(selectedItemString);
 					in.putExtra("Vorlesung", dt.getVorlesung());
 					startActivity(in);
 				}
@@ -213,7 +216,7 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
 					if(!arg0.getAdapter().getItem(arg2).equals("")) {
 					AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
 					 myAlertDialog.setTitle("Vorlesungszeit");
-					 myAlertDialog.setMessage(filler.zeit().get(k));
+					 myAlertDialog.setMessage(datenbank.liste("zeit").get(k));
 					 myAlertDialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
 						 public void onClick(DialogInterface arg0, int arg1) {
 						 }});
@@ -231,7 +234,7 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
 					if(!arg0.getAdapter().getItem(arg2).equals("")) {
 					AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
 					 myAlertDialog.setTitle("Vorlesungszeit");
-					 myAlertDialog.setMessage(filler.zeit().get(k));
+					 myAlertDialog.setMessage(datenbank.liste("zeit").get(k));
 					 myAlertDialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
 						 public void onClick(DialogInterface arg0, int arg1) {
 						 }});
@@ -249,7 +252,7 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
 					if(!arg0.getAdapter().getItem(arg2).equals("")) {
 					AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
 					 myAlertDialog.setTitle("Vorlesungszeit");
-					 myAlertDialog.setMessage(filler.zeit().get(k));
+					 myAlertDialog.setMessage(datenbank.liste("zeit").get(k));
 					 myAlertDialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
 						 public void onClick(DialogInterface arg0, int arg1) {
 						 }});
@@ -267,7 +270,7 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
 					if(!arg0.getAdapter().getItem(arg2).equals("")) {
 					AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
 					 myAlertDialog.setTitle("Vorlesungszeit");
-					 myAlertDialog.setMessage(filler.zeit().get(k));
+					 myAlertDialog.setMessage(datenbank.liste("zeit").get(k));
 					 myAlertDialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
 						 public void onClick(DialogInterface arg0, int arg1) {
 						 }});
@@ -285,7 +288,7 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
 					if(!arg0.getAdapter().getItem(arg2).equals("")) {
 					AlertDialog.Builder myAlertDialog = new AlertDialog.Builder(this);
 					 myAlertDialog.setTitle("Vorlesungszeit");
-					 myAlertDialog.setMessage(filler.zeit().get(k));
+					 myAlertDialog.setMessage(datenbank.liste("zeit").get(k));
 					 myAlertDialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
 						 public void onClick(DialogInterface arg0, int arg1) {
 						 }});
@@ -384,7 +387,8 @@ public class NavSicht extends Activity implements OnClickListener, OnMenuItemCli
 					Toast toast = Toast.makeText(this, "Bitte im Stundenplan eine Vorlesung auswählen!", Toast.LENGTH_SHORT);
 					toast.show(); 
 				} else {
-					dt = new Datenbank(selectedItemString);
+					dt = new Datenbank();
+					dt.setVorlesung(selectedItemString);
 					in.putExtra("Vorlesung", dt.getVorlesung());
 					startActivity(in);
 				}

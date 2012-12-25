@@ -1,6 +1,7 @@
 package Datenbank;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Hausverwaltung {
 	@SuppressWarnings("rawtypes")
@@ -13,15 +14,17 @@ public class Hausverwaltung {
 		beuth();
 	}
 	
-	public boolean beuthCheck(String nummer) {
+	public boolean hausCheck(String nummer, String haus) {
 		boolean antwort = false;
 		
-		for(int j = 0; j < beuth.length; j++) {
-			String index = ""+j;
-			if(index.equals(nummer.substring(0, 1))) {
-				for(int g = 0; g < beuth[j].size(); g++) {
-					if(beuth[j].get(g).equals(nummer)) {
-						antwort = true;
+		if (haus.equals("Beuth")) {
+			for(int j = 0; j < beuth.length; j++) {
+				String index = ""+j;
+				if(index.equals(nummer.substring(0, 1))) {
+					for(int g = 0; g < beuth[j].size(); g++) {
+						if(beuth[j].get(g).equals(nummer)) {
+							antwort = true;
+						}
 					}
 				}
 			}
@@ -105,5 +108,15 @@ public class Hausverwaltung {
 				beuth[i] = og5;
 			}
 		}
+	}
+
+	public ArrayList<String> getRaumInfo (String raumnummer, String haus) {
+		ArrayList<String> b342a = new ArrayList<String>();
+		b342a.add("http://labor.beuth-hochschule.de/cga/laborraeume/holodeck/");
+		b342a.add("9:30 - 12:15");
+		HashMap<String, ArrayList<String>> gauss = new HashMap<String, ArrayList<String>>();
+		gauss.put("342a", b342a);
+		
+		return gauss.get(raumnummer);
 	}
 }
