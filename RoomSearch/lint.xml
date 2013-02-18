@@ -2,5 +2,6 @@
 <lint>
     <issue id="UseCompoundDrawables">
         <ignore path="res\layout-port\cam_nav_sicht.xml" />
+        <ignore path="res\layout\cam_sicht.xml" />
     </issue>
 </lint>

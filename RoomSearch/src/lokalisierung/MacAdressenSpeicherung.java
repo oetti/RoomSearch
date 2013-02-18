@@ -1,0 +1,303 @@
+package lokalisierung;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class MacAdressenSpeicherung {
+	private static MacAdressenSpeicherung INSTANCE = new MacAdressenSpeicherung();
+	HashMap<String, double[]> macAdressen;
+	private ArrayList<HashMap<String, double[]>> macA;
+	private int hausIdentifizierung;
+	//HashMap<String, String> raumNummer;
+	
+	private MacAdressenSpeicherung() {
+		macAdressen = gaussMacAdressenFuellen();
+		//raumNummer = raumIdfuellen();
+		macA = kompletteListeFuellen();
+	}
+	
+	/**
+	 * Gibt die Instanz der Klasse wieder.
+	 * 
+	 * @return MacAdressenSpeicherung
+	 */
+	public static MacAdressenSpeicherung getInstance() {
+		return MacAdressenSpeicherung.INSTANCE;
+	}
+	
+	/**
+	 * Gibt von allen Gebäuden die Mac Adressen wieder. Diese sind in einer ArrayList abgelegt.
+	 * 
+	 * @return ArrayList
+	 */
+	private ArrayList<HashMap<String, double[]>> kompletteListeFuellen() {
+		ArrayList<HashMap<String, double[]>> alleAdressen = new ArrayList<HashMap<String,double[]>>();
+		// Index 0 = Haus Gauß
+		alleAdressen.add(gaussMacAdressenFuellen());
+		return alleAdressen;
+	}
+	
+	
+	/**
+	 * Füllt die Liste mit den Mac Adressen des Gebäude Gauß
+	 * 
+	 * @return HashMap 
+	 */
+	private HashMap<String, double[]> gaussMacAdressenFuellen() {
+				HashMap<String, double[]> gaussRouter = new HashMap<String, double[]>();
+				// 2.Etage
+				gaussRouter.put("a4:56:30:a2:33:b0", getAccessPointKoordinatenPosition(207));
+				gaussRouter.put("a4:56:30:8f:02:00", getAccessPointKoordinatenPosition(215));
+				gaussRouter.put("a4:56:30:8f:0b:50", getAccessPointKoordinatenPosition(220));
+				gaussRouter.put("a4:56:30:a2:f2:f0", getAccessPointKoordinatenPosition(250));
+				gaussRouter.put("a4:56:30:a2:21:e0", getAccessPointKoordinatenPosition(218));
+				gaussRouter.put("a4:56:30:a2:33:f0", getAccessPointKoordinatenPosition(208));
+				gaussRouter.put("a4:56:30:47:de:f0", getAccessPointKoordinatenPosition(223));
+				gaussRouter.put("a4:56:30:8f:12:40", getAccessPointKoordinatenPosition(253));
+				gaussRouter.put("a4:56:30:8f:06:60", getAccessPointKoordinatenPosition(230));
+				gaussRouter.put("a4:56:30:a2:22:60", getAccessPointKoordinatenPosition(212));
+				gaussRouter.put("a4:56:30:5d:2a:40", getAccessPointKoordinatenPosition(221));
+				gaussRouter.put("a4:56:30:a2:3e:40", getAccessPointKoordinatenPosition(249));
+				gaussRouter.put("a4:56:30:a2:2f:d0", getAccessPointKoordinatenPosition(254));
+				gaussRouter.put("a4:56:30:8f:09:20", getAccessPointKoordinatenPosition(243));
+				gaussRouter.put("a4:56:30:a2:20:40", getAccessPointKoordinatenPosition(242));
+				gaussRouter.put("a4:56:30:8f:18:20", getAccessPointKoordinatenPosition(234));
+				gaussRouter.put("a4:56:30:5d:50:80", getAccessPointKoordinatenPosition(201));
+				gaussRouter.put("a4:56:30:8e:e9:e0", getAccessPointKoordinatenPosition(257));
+				gaussRouter.put("a4:56:30:a2:3d:60", getAccessPointKoordinatenPosition(213));
+				gaussRouter.put("a4:56:30:8f:0b:50", getAccessPointKoordinatenPosition(202));
+				gaussRouter.put("a4:56:30:a2:31:b0", getAccessPointKoordinatenPosition(225));
+				
+				// 3.Etage
+				gaussRouter.put("a4:56:30:a2:3f:70", getAccessPointKoordinatenPosition(301));
+				gaussRouter.put("a4:56:30:8f:1a:d0", getAccessPointKoordinatenPosition(302));
+				gaussRouter.put("a4:56:30:a2:20:80", getAccessPointKoordinatenPosition(303));
+				gaussRouter.put("a4:56:30:8e:ff:d0", getAccessPointKoordinatenPosition(305));
+				gaussRouter.put("a4:56:30:8f:00:00", getAccessPointKoordinatenPosition(307));
+				gaussRouter.put("a4:56:30:5c:b7:d0", getAccessPointKoordinatenPosition(314));
+				gaussRouter.put("a4:56:30:8f:0a:b0", getAccessPointKoordinatenPosition(321));
+				gaussRouter.put("a4:56:30:8f:0b:00", getAccessPointKoordinatenPosition(322));
+				gaussRouter.put("a4:56:30:8f:0a:c0", getAccessPointKoordinatenPosition(323));
+				gaussRouter.put("a4:56:30:8f:05:70", getAccessPointKoordinatenPosition(325));
+				gaussRouter.put("a4:56:30:8f:25:e0", getAccessPointKoordinatenPosition(332));
+				gaussRouter.put("a4:56:30:8e:fd:30", getAccessPointKoordinatenPosition(341));
+				gaussRouter.put("a4:56:30:46:57:30", getAccessPointKoordinatenPosition(342));
+				gaussRouter.put("a4:56:30:a2:49:c0", getAccessPointKoordinatenPosition(343));
+				gaussRouter.put("a4:56:30:8f:06:80", getAccessPointKoordinatenPosition(345));
+				gaussRouter.put("a4:56:30:a2:3b:40", getAccessPointKoordinatenPosition(349));
+				gaussRouter.put("a4:56:30:a2:39:d0", getAccessPointKoordinatenPosition(350));
+				gaussRouter.put("a4:56:30:a2:e2:00", getAccessPointKoordinatenPosition(352));
+				
+				// 4.Etage
+				gaussRouter.put("a4:56:30:8f:0a:f0", getAccessPointKoordinatenPosition(421));
+				gaussRouter.put("a4:56:30:47:87:50", getAccessPointKoordinatenPosition(445));
+				gaussRouter.put("a4:56:30:8f:1a:a0", getAccessPointKoordinatenPosition(452));
+				gaussRouter.put("a4:56:30:a2:25:30", getAccessPointKoordinatenPosition(425));
+				gaussRouter.put("a4:56:30:8f:1f:40", getAccessPointKoordinatenPosition(451));
+				gaussRouter.put("a4:56:30:8f:02:c0", getAccessPointKoordinatenPosition(420));
+				gaussRouter.put("a4:56:30:8f:08:80", getAccessPointKoordinatenPosition(441));
+				gaussRouter.put("a4:56:30:8f:16:b0", getAccessPointKoordinatenPosition(423));
+				gaussRouter.put("a4:56:30:8f:16:d0", getAccessPointKoordinatenPosition(432));
+				gaussRouter.put("a4:56:30:a2:2f:50", getAccessPointKoordinatenPosition(442));
+				return gaussRouter;
+	}
+	
+	/*
+	private HashMap<String, String> raumIdfuellen() {
+		HashMap<String, String> gaussRouter = new HashMap<String, String>();
+		// 2.Etage
+		gaussRouter.put("a4:56:30:a2:33:b0", "207");
+		gaussRouter.put("a4:56:30:8f:02:00", "215");
+		gaussRouter.put("a4:56:30:8f:0b:50", "220");
+		gaussRouter.put("a4:56:30:a2:f2:f0", "250");
+		gaussRouter.put("a4:56:30:a2:21:e0", "218");
+		gaussRouter.put("a4:56:30:a2:33:f0", "208");
+		gaussRouter.put("a4:56:30:47:de:f0", "223");
+		gaussRouter.put("a4:56:30:8f:12:40", "253");
+		gaussRouter.put("a4:56:30:8f:06:60", "230a");
+		gaussRouter.put("a4:56:30:a2:22:60", "212");
+		gaussRouter.put("a4:56:30:5d:2a:40", "221");
+		gaussRouter.put("a4:56:30:a2:3e:40", "249");
+		gaussRouter.put("a4:56:30:a2:2f:d0", "254");
+		gaussRouter.put("a4:56:30:8f:09:20", "243");
+		gaussRouter.put("a4:56:30:a2:20:40", "242");
+		gaussRouter.put("a4:56:30:8f:18:20", "234");
+		gaussRouter.put("a4:56:30:5d:50:80", "201");
+		gaussRouter.put("a4:56:30:8e:e9:e0", "257");
+		gaussRouter.put("a4:56:30:a2:3d:60", "213");
+		gaussRouter.put("a4:56:30:8f:0b:50", "202");
+		gaussRouter.put("a4:56:30:a2:31:b0", "225");
+		
+		// 3.Etage
+		gaussRouter.put("a4:56:30:a2:3f:70", "301");
+		gaussRouter.put("a4:56:30:8f:1a:d0", "302");
+		gaussRouter.put("a4:56:30:a2:20:80", "303");
+		gaussRouter.put("a4:56:30:8e:ff:d0", "305");
+		gaussRouter.put("a4:56:30:8f:00:00", "307");
+		gaussRouter.put("a4:56:30:5c:b7:d0", "314");
+		gaussRouter.put("a4:56:30:8f:0a:b0", "321");
+		gaussRouter.put("a4:56:30:8f:0b:00", "322");
+		gaussRouter.put("a4:56:30:8f:0a:c0", "323");
+		gaussRouter.put("a4:56:30:8f:05:70", "325");
+		gaussRouter.put("a4:56:30:8f:25:e0", "332");
+		gaussRouter.put("a4:56:30:8e:fd:30", "341");
+		gaussRouter.put("a4:56:30:46:57:30", "342a");
+		gaussRouter.put("a4:56:30:a2:49:c0", "343");
+		gaussRouter.put("a4:56:30:8f:06:80", "345");
+		gaussRouter.put("a4:56:30:a2:3b:40", "349");
+		gaussRouter.put("a4:56:30:a2:39:d0", "350");
+		gaussRouter.put("a4:56:30:a2:e2:00", "352");
+		
+		// 4.Etage
+		gaussRouter.put("a4:56:30:8f:0a:f0", "421");
+		gaussRouter.put("a4:56:30:47:87:50", "445");
+		gaussRouter.put("a4:56:30:8f:1a:a0", "452");
+		gaussRouter.put("a4:56:30:a2:25:30", "425");
+		gaussRouter.put("a4:56:30:8f:1f:40", "451");
+		gaussRouter.put("a4:56:30:8f:02:c0", "420");
+		gaussRouter.put("a4:56:30:8f:08:80", "441");
+		gaussRouter.put("a4:56:30:8f:16:b0", "423");
+		gaussRouter.put("a4:56:30:8f:16:d0", "432");
+		gaussRouter.put("a4:56:30:a2:2f:50", "442");
+		return gaussRouter;
+	}
+	
+	public String getRaum(String mac) {
+		return raumNummer.get(mac);
+	}
+	*/
+	
+	/**
+	 * Diese Methode kontrolliert ob es dieser Key mit den vorhanden Keys übereinstimmen
+	 * 
+	 * @param mac die Mac Adresse die überprüft wird
+	 * @return Boolean
+	 */
+	
+	public boolean keyControl (String mac) {
+		boolean fazit = false;
+		for(int i = 0; i < macA.size(); i++) {
+			if(macA.get(i).containsKey(mac)) {
+				hausIdentifizierung = i;
+				fazit = true;
+			}
+		}
+		
+		//boolean fazit = macAdressen.containsKey(mac);
+		return fazit;
+	}
+	
+	/**
+	 * Der Index der ArrayList gibt die Gebäude Erkennnung an.
+	 * 0 entspricht Gauß
+	 * 1 entspricht Beuth
+	 * usw.
+	 * 
+	 * @return Integer
+	 */
+	public int getHausIdentifizierung() {
+		return this.hausIdentifizierung;
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param mac
+	 * @return
+	 */
+	public double[] getAccessPointPosition (String mac) {
+		double[] resultat = null;
+		for(int i = 0; i < macA.size(); i++) {
+			if(keyControl(mac)) {
+				//hausIdentifizierung = i;
+				resultat = macA.get(i).get(mac);
+			} else {
+				double[] falsch = {0,0};
+				//System.out.println("gibt es nicht");
+				resultat = falsch;
+			}
+		}
+		return resultat;
+		
+		/*
+		if(macAdressen.containsKey(mac)) {
+			return macAdressen.get(mac);
+		} else {
+			double[] falsch = {0,0};
+			System.out.println("gibt es nicht");
+			return  falsch;
+		}*/
+	}
+	
+	/**
+	 * Gibt die Koordinaten Positionen des Access Points des jeweiligen Raum zurück.
+	 * 
+	 * @param raum die Raumnummer unter dem die Position gespeichert ist
+	 * @return double[] mit den Koordinatenpunkten des Access Points
+	 */
+	private double[] getAccessPointKoordinatenPosition (int raum) {
+		int nummer = raum;
+		double[] r = new double[3];
+		
+		switch(nummer) {
+		// 2.Etage
+		case 207 : r[0] = 3; r[1]= 12; r[2]= 12.10; break;
+		case 215 : r[0] = 1; r[1]= 41; r[2]= 12.10; break;
+		case 220 : r[0] = 12; r[1]= 63; r[2]= 12.10; break;
+		case 250 : r[0] = 13; r[1]= 141; r[2]= 12.10; break;
+		case 218 : r[0] = 11; r[1]= 48; r[2]= 12.10; break;
+		case 208 : r[0] = 12; r[1]= 20; r[2]= 12.10; break;
+		case 223 : r[0] = 5; r[1]= 83; r[2]= 12.10; break;
+		case 253 : r[0] = 3; r[1]= 136; r[2]= 12.10; break;
+		case 230 : r[0] = 14; r[1]= 93; r[2]= 12.10; break;
+		case 212 : r[0] = 14; r[1]= 40; r[2]= 12.10; break;
+		case 221 : r[0] = 5; r[1]= 66; r[2]= 12.10; break;
+		case 249 : r[0] = 3; r[1]= 128; r[2]= 12.10; break;
+		case 254 : r[0] = 8; r[1]= 148; r[2]= 12.10; break;
+		case 243 : r[0] = 2; r[1]= 117; r[2]= 12.10; break;
+		case 242 : r[0] = 13; r[1]= 119.5; r[2]= 12.10; break;
+		case 234 : r[0] = 14; r[1]= 102; r[2]= 12.10; break;
+		case 201 : r[0] = 6; r[1]= 2; r[2]= 12.10; break;
+		case 257 : r[0] = 5.5; r[1]= 147; r[2]= 12.10; break;
+		case 213 : r[0] = 2.5; r[1]= 29; r[2]= 12.10; break;
+		case 202 : r[0] = 14; r[1]= 8; r[2]= 12.10; break;
+		case 225 : r[0] = 5; r[1]= 97; r[2]= 12.10; break;
+		
+		// 3.Etage
+		case 301 : r[0] = 6; r[1]= 10; r[2]= 16.5; break;
+		case 302 : r[0] = 13; r[1]= 18; r[2]= 16.5; break;
+		case 303 : r[0] = 3; r[1]= 22; r[2]= 16.5; break;
+		case 305 : r[0] = 4; r[1]= 38; r[2]= 16.5; break;
+		case 307 : r[0] = 3; r[1]= 49; r[2]= 16.5; break;
+		case 314 : r[0] = 12; r[1]= 47; r[2]= 16.5; break;
+		case 321 : r[0] = 5; r[1]= 71; r[2]= 16.5; break;
+		case 322 : r[0] = 12; r[1]= 62; r[2]= 16.5; break;
+		case 323 : r[0] = 5; r[1]= 88; r[2]= 16.5; break;
+		case 325 : r[0] = 5; r[1]= 103; r[2]= 16.5; break;
+		case 332 : r[0] = 12; r[1]= 90; r[2]= 16.5; break;
+		case 341 : r[0] = 3; r[1]= 122; r[2]= 16.5; break;
+		case 342 : r[0] = 14; r[1]= 126; r[2]= 16.5; break;
+		case 343 : r[0] = 5; r[1]= 132; r[2]= 16.5; break;
+		case 345 : r[0] = 5; r[1]= 142; r[2]= 16.5; break;
+		case 349 : r[0] = 4; r[1]= 153; r[2]= 16.5; break;
+		case 350 : r[0] = 12; r[1]= 138; r[2]= 16.5; break;
+		case 352 : r[0] = 14; r[1]= 150; r[2]= 16.5; break;
+		
+		// 4.Etage
+		// noch nicht eindeutig
+		case 421 : r[0] = 3; r[1]= 69; r[2]= 20.9; break;
+		// noch nicht eindeutig
+		case 445 : r[0] = 3; r[1]= 141; r[2]= 20.9; break;
+		case 452 : r[0] = 15; r[1]= 141; r[2]= 20.9; break;
+		case 425 : r[0] = 4; r[1]= 99; r[2]= 20.9; break;
+		case 451 : r[0] = 3; r[1]= 154; r[2]= 20.9; break;
+		case 420 : r[0] = 14; r[1]= 69; r[2]= 20.9; break;
+		case 441 : r[0] = 3; r[1]= 120; r[2]= 20.9; break;
+		case 423 : r[0] = 3; r[1]= 86; r[2]= 20.9; break;
+		case 432 : r[0] = 14; r[1]= 94; r[2]= 20.9; break;
+		// noch nicht eindeutig
+		case 442 : r[0] = 14; r[1]= 111; r[2]= 20.9; break;
+		}		
+		return r;
+	}
+}

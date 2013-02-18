@@ -46,5 +46,11 @@
     <string name="abstand">Abstand</string>
     <string name="raum_plan">Raumplan</string>
     <string name="login">Login</string>
+    <string name="qr_scanner">Code Scanner</string>
+    <string name="leer">---</string>
+    <string name="option_1">Rauminformation</string>
+    <string name="option_2">Raum Foto</string>
+    <string name="option_3">zur Website</string>
+    <string name="option_4">Raumbelegung</string>
 
 </resources>

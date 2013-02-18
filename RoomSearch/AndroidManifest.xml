@@ -34,7 +34,8 @@
         <activity android:name="LoginSicht"></activity>
         <activity android:name="UebergangSicht"></activity>
         <activity android:name="NavSichtDoz"></activity>
-        <activity android:name="GastNavSicht"></activity>
-        <activity android:name="GastFrageSicht"></activity>
+        <activity android:name="GastNavSicht"
+                  android:screenOrientation="portrait"></activity>
+        <activity android:name="roomsearch.activities.GastFrageSicht"></activity>
     </application>
 </manifest>
