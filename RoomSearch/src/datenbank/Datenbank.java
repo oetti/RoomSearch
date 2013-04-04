@@ -13,7 +13,7 @@ public class Datenbank {
 	
 	
 	public Datenbank() {
-		hausverwaltung = new Hausverwaltung();
+		hausverwaltung = Hausverwaltung.getInstance();
 		filler = new Listfiller();
 		//this.th = th;
 		//this.etage = etage;
