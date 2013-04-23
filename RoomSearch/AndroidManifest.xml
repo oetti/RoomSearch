@@ -28,14 +28,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="NavSicht"></activity>
+        <activity android:name=".VorlesungsPlan"
+            		android:screenOrientation="portrait"></activity>
         <activity android:name="CamNavSicht"
             	  android:screenOrientation="portrait"></activity>
         <activity android:name="LoginSicht"></activity>
-        <activity android:name="UebergangSicht"></activity>
+        <activity android:name=".Uebersicht"></activity>
         <activity android:name="NavSichtDoz"></activity>
-        <activity android:name="GastNavSicht"
+        <activity android:name=".GastUebersicht"
                   android:screenOrientation="portrait"></activity>
-        <activity android:name="roomsearch.activities.GastFrageSicht"></activity>
+        <activity android:name=".GastFrageSicht"></activity>
+        <activity android:name="create.edit.delete.CreateProfilActivity"></activity>
+        <activity android:name="create.edit.delete.CreateVorlesungActivity"></activity>
+        <activity android:name="create.edit.delete.EditPlanActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="datenbank.DBSicht"></activity>
     </application>
 </manifest>

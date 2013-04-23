@@ -3,9 +3,11 @@ package lokalisierung;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import roomsearch.activities.CamNavSicht;
-import roomsearch.activities.NavSicht;
+
+import com.example.roomsearch.CamNavSicht;
+import com.example.roomsearch.VorlesungsPlan;
 import com.example.roomsearch.R;
+import com.example.roomsearch.Uebersicht;
 
 import datenbank.GaussRaumPositionen;
 import lokalisierung.MacAdressenSpeicherung;
@@ -40,8 +42,8 @@ public class WifiReceiver extends BroadcastReceiver{
 	
 	public WifiReceiver(Activity act) {
 		this.act = act;
-		if (act instanceof NavSicht) {
-			wifi = ((NavSicht) act).getWifi();
+		if (act instanceof Uebersicht) {
+			wifi = ((Uebersicht) act).getWifi();
 		}
 	
 		if (act instanceof CamNavSicht) {
@@ -71,8 +73,8 @@ public class WifiReceiver extends BroadcastReceiver{
 	    
 		try {
 	    // Code to execute when SCAN_RESULTS_AVAILABLE_ACTION event occurs
-			if (act instanceof NavSicht) {
-				wifi = ((NavSicht) act).getWifi();
+			if (act instanceof Uebersicht) {
+				wifi = ((Uebersicht) act).getWifi();
 				//System.out.println("NavSicht: Wifi wurde gesetzt");
 			}
 		
@@ -199,14 +201,14 @@ public class WifiReceiver extends BroadcastReceiver{
 	   GaussRaumPositionen p = new GaussRaumPositionen();
 	 
 	   // ist die Activity die NavSicht dann mache das...
-	   if (act instanceof NavSicht) {
+	   if (act instanceof VorlesungsPlan) {
 		   //System.out.println("NavSicht Standort wird ermittelt");
 			String position = //"Gebäude: Haus Beuth\n\n" +
 								"Etage: " + p.getEtage(location[2]) + "\n\n" +
 								"Gebiet: " + p.getPosition(location[0], location[1]) +
 								"\n\nMeine Position: = " + Math.round(location[0]) + " y = " + Math.round(location[1]);
 		
-			((NavSicht) act).standort.setText(position);
+			((Uebersicht) act).standort.setText(position);
 	   }
 		/*
 		if (act instanceof GastNavSicht) {
@@ -227,10 +229,7 @@ public class WifiReceiver extends BroadcastReceiver{
 	   		// Abstand zwischen meiner Position bis zum Zielpunkt
 	   		abstand =  Math.round(Math.sqrt(nVector[0]*nVector[0] + nVector[1]*nVector[1]));
 	   		((CamNavSicht) act).abstandView.setText("ca. " +abstand + "m");
-	   
-		    
-	  		
-			}
+		}
 		} catch (RuntimeException e) {
 				//((NavSicht) act).keinNetz(e.toString());	
 			}

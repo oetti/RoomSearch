@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/header_profil_erstellen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="25dp" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.49" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/header_profilcr_benutzername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/hrz_text" />
+
+            <LinearLayout
+                android:id="@+id/layout_profilcr_benutzername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" >
+
+                <EditText
+                    android:id="@+id/edit_benutzername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:singleLine="true"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:id="@+id/image_control_benutzername"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_raum2" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/header_profilcr_vorname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/vorname" />
+
+            <LinearLayout
+                android:id="@+id/layout_profilcr_vorname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" >
+
+                <EditText
+                    android:id="@+id/edit_vorname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:singleLine="true"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:id="@+id/Image_control_vorname"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_raum2" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/header_profilcr_nachname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/nachname" />
+
+            <LinearLayout
+                android:id="@+id/layout_profilcr_nachname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" >
+
+                <EditText
+                    android:id="@+id/edit_nachname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:singleLine="true"
+                    android:textSize="20dp" >
+
+                    <requestFocus />
+                </EditText>
+
+                <ImageView
+                    android:id="@+id/Image_control_nachname"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_raum2" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/header_profilcr_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/email" />
+
+            <LinearLayout
+                android:id="@+id/layout_profilcr_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" >
+
+                <EditText
+                    android:id="@+id/edit_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:id="@+id/Image_control_email"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_raum2" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/header_profilcr_passwort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/passwort" />
+
+            <LinearLayout
+                android:id="@+id/layout_profilcr_passwort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" >
+
+                <EditText
+                    android:id="@+id/edit_passwort"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPassword"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:id="@+id/Image_control_passwort"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_raum2" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/header_profilcr_pwwdh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/passwort_wiederholen" />
+
+            <LinearLayout
+                android:id="@+id/layout_profilcr_pwwdh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" >
+
+                <EditText
+                    android:id="@+id/edit_passwortwdh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPassword"
+                    android:textSize="20dp" />
+
+                <ImageView
+                    android:id="@+id/Image_control_pwwdh"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_raum2" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/header_profilcr_rolle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="@string/rolle" />
+
+            <Spinner
+                android:id="@+id/spinner_rolle"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginBottom="20dp" />
+
+            <Button
+                android:id="@+id/button_profilerstellen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@string/profil_erstellen" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

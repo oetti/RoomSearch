@@ -21,9 +21,9 @@ public class Listfiller {
 		mo.add("B 542 Mobiles Web");
 		mo.add("B 343 Computergrafik II Übg.");
 		
-		di.add("");
-		di.add("D 114 Algorithmen Übg.");
-		di.add("B 323 Algorithmen");
+		mo.add("");
+		mo.add("D 114 Algorithmen Übg.");
+		mo.add("B 323 Algorithmen");
 		di.add("B 323 Algorithmen");
 		di.add("B 507 Grundlagen wissen. Arbeitens");
 		

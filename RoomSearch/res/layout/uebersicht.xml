@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back_ground"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView_auswahl_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="#00979a"
+        android:gravity="center"
+        android:text="@string/auswahl_menu"
+        android:textColor="#ffffff"
+        android:textSize="25dp" />
+
+    <ScrollView
+        android:id="@+id/scrollView_auswahl_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/mein_vorlesungsplan_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="#9dd7d8"
+                android:gravity="center"
+                android:text="@string/mein_vorlesungsplan"
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/button_mein_plan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/zum_plan"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/textView_raum_suchen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="25dp"
+                android:background="#9dd7d8"
+                android:gravity="center"
+                android:text="@string/raum_suchen"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <Spinner
+                    android:id="@+id/spinner_menu_gebäude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_weight="5"
+                    android:background="#fff" />
+
+                <EditText
+                    android:id="@+id/editText_number"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="#fff"
+                    android:ems="10"
+                    android:textSize="25dp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_menu_suchen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/suchen"
+                android:textColor="#fff" />
+
+            <Button
+                android:id="@+id/button_menu_sprach"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/spracheingabe"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/textView_standort"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="25dp"
+                android:background="#9dd7d8"
+                android:gravity="center"
+                android:text="@string/mein_standort"
+                android:textSize="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="0.70" >
+
+                <TextView
+                    android:id="@+id/textView_menu_standort"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_weight="0.5"
+                    android:background="#fff"
+                    android:gravity="center"
+                    android:text="@string/standort_wird_ermittelt" />
+
+                <Button
+                    android:id="@+id/button_menu_campus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/map_position"
+                    android:textColor="#fff" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/abmelden" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
